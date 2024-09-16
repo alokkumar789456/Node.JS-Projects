@@ -5,28 +5,6 @@ dotenv.config();
 
 const resend = new Resend(process.env.MAILAPI);
 
-//! IMP note
-//! mail can only sent from: "LOKI <onboarding@resend.dev>",
-//! to: ["alokkumar77954@gmail.com"] because its free version
-//! so create account only from  alokkumar77954@gmail.com and 
-//! API key will expire every 30 days 
-
-
-// (async function () {
-//   const { data, error } = await resend.emails.send({
-//     from: "LOKI <onboarding@resend.dev>",
-//     to: ["alokkumar77954@gmail.com"],
-//     subject: "Hello World",
-//     html: "<strong>It works!</strong>",
-//   });
-
-// if (error) {
-//   return console.error({ error });
-// }
-
-// console.log({ data });
-// })();
-
 //! creating a welcome message
 const sendWelcomeEmail = async (email, name) => {
   try {
@@ -93,3 +71,28 @@ const sendCancelmail = async (email, name) => {
 
 
 export default { sendWelcomeEmail, sendCancelmail };
+
+
+
+
+//! IMP note
+//! mail can only sent from: "LOKI <onboarding@resend.dev>",
+//! to: ["alokkumar77954@gmail.com"] because its free version
+//! so create account only from  alokkumar77954@gmail.com and 
+//! API key will expire every 30 days 
+
+
+// (async function () {
+//   const { data, error } = await resend.emails.send({
+//     from: "LOKI <onboarding@resend.dev>",
+//     to: ["alokkumar77954@gmail.com"],
+//     subject: "Hello World",
+//     html: "<strong>It works!</strong>",
+//   });
+
+// if (error) {
+//   return console.error({ error });
+// }
+
+// console.log({ data });
+// })();
