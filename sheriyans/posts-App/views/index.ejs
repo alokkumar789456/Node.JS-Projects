@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>POST-APP</title>
+    <style>
+        /* Custom font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .hover-transition:hover {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-r from-gray-900 to-gray-800 flex items-center justify-center min-h-screen p-6">
+    <div class="w-full max-w-md">
+        <div class="mb-4">
+            <a href="/login" class="mr-10 text-blue-400 hover:text-blue-300 hover-transition">Login</a>
+            <a href="/logout" class="mr-10 text-blue-400 hover:text-blue-300 hover-transition">Logout</a>
+            <a href="/profile" class="mr-10 text-blue-400 hover:text-blue-300 hover-transition">Profile</a>
+        </div>
+        <h3 class="text-2xl font-semibold mb-6 text-white text-center">Create Your Account</h3>
+        <form action="/register" method="post" class="space-y-4">
+            <div class="flex gap-4">
+                <input type="text" name="name" placeholder="Name"
+                       class="border border-gray-600 p-3 rounded-md flex-1 bg-gray-800 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 transition-all">
+                <input type="text" name="username" placeholder="Username"
+                       class="border border-gray-600 p-3 rounded-md flex-1 bg-gray-800 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 transition-all">
+            </div>
+            <div class="flex gap-4">
+                <input type="password" name="password" placeholder="Password"
+                       class="border border-gray-600 p-3 rounded-md flex-1 bg-gray-800 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 transition-all">
+                <input type="email" name="email" placeholder="Email"
+                       class="border border-gray-600 p-3 rounded-md flex-1 bg-gray-800 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 transition-all">
+            </div>
+            <div class="flex gap-4 items-center">
+                <input type="number" name="age" placeholder="Age"
+                       class="border border-gray-600 p-3 rounded-md bg-gray-800 text-white placeholder-gray-400 focus:ring-2 focus:ring-blue-500 transition-all w-24">
+                <input type="submit" value="Create Account" class="w-full bg-blue-600 text-white p-3 rounded-md cursor-pointer hover:bg-blue-500 transition-all">
+            </div>
+        </form>
+    </div>
+    <script src="/javascript/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,123 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Weather App</title>
+    <style>
+        body {
+            text-align: center;
+            padding: 20px;
+            font-family: Arial, sans-serif;
+            background-color: #f0f0f0;
+        }
+
+        nav a {
+            margin: 0 15px;
+            text-decoration: none;
+            color: #007BFF;
+            font-size: 18px;
+        }
+
+        h1 {
+            font-size: 36px;
+            color: #333;
+        }
+
+        p {
+            font-size: 20px;
+            color: #666;
+        }
+
+        .search-container {
+            margin-top: 20px;
+        }
+
+        .search-box {
+            width: 300px;
+            padding: 10px;
+            font-size: 18px;
+            border: 2px solid #007BFF;
+            border-radius: 5px;
+        }
+
+        .search-button {
+            padding: 10px 20px;
+            font-size: 18px;
+            color: #fff;
+            background-color: #007BFF;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+            transition: background-color 0.3s;
+        }
+
+        .search-button:hover {
+            background-color: #0056b3;
+        }
+
+        .weather-result {
+            margin-top: 20px;
+            font-size: 20px;
+            color: #333;
+        }
+    </style>
+</head>
+
+<body>
+    <nav>
+        <a href="/index">Weather</a>
+        <a href="/about">About</a>
+        <a href="/help">Help</a>
+    </nav>
+    <h1>Weather</h1>
+    <p>Use this site to get your weather!</p>
+    <div class="search-container">
+        <input type="text" class="search-box" id="cityInput" placeholder="Enter city name...">
+        <button class="search-button" onclick="getWeather()">Search</button>
+    </div>
+    <div class="weather-result" id="weatherResult"></div>
+    <script>
+        console.log('connected ');
+{{!-- 
+        //! fetch api
+        fetch('https://puzzle.mead.io/puzzle')
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+            })
+            .catch((err) => {
+                console.error(err);
+            }); --}}
+
+        fetch('http://localhost:3000/weather?address=bengaluru')
+            .then((res) => res.json())
+            .then((data) => {
+                console.log(data);
+            })
+            .catch((err) => {
+                console.error(err);
+            });
+
+        function getWeather() {
+            const city = document.getElementById('cityInput').value;
+            const weatherResult = document.getElementById('weatherResult');
+            weatherResult.innerHTML = 'Loading...';
+
+
+            fetch(`http://localhost:3000/weather?address=${city}`)
+                .then((res) => res.json())
+                .then((data) => {
+                    if (data.error) {
+                        weatherResult.innerHTML = 'ERROR: Unable to find location. Try another search!';
+                    } else {
+                        weatherResult.innerHTML = `Location: ${data.location}<br>Forecast: ${data.forecast}`;
+                    }
+                })
+                .catch((err) => {
+                    weatherResult.innerHTML = 'ERROR: Unable to find location. Try another search!';
+                });
+        }
+    </script>
+</body>
+</html>

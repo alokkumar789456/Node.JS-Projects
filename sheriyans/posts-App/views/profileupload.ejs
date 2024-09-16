@@ -1,0 +1,36 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/styles.css">
+    <script src="https://cdn.tailwindcss.com"></script>
+    <title>POST-APP</title>
+    <style>
+        /* Custom font */
+        @import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;600&display=swap');
+
+        body {
+            font-family: 'Poppins', sans-serif;
+        }
+        .hover-transition:hover {
+            transition: background-color 0.3s ease, color 0.3s ease;
+        }
+    </style>
+</head>
+
+<body class="bg-gradient-to-r from-gray-900 to-gray-800 flex items-center justify-center min-h-screen p-6">
+    <div class="w-full max-w-md mx-auto p-6 bg-gray-800 rounded-lg shadow-lg">
+        <h3 class="text-2xl font-semibold mb-6 text-white text-center">Upload Profile Picture</h3>
+        <form action="/upload" method="post" class="space-y-4" enctype="multipart/form-data">
+            <input type="file" class="w-full text-white bg-gray-700 border border-gray-600 rounded-md p-2 file:bg-blue-600 file:text-white file:rounded-md file:p-2 file:cursor-pointer file:focus:outline-none file:focus:ring-2 file:focus:ring-blue-500 transition-all" name="image">
+            <div class="flex gap-4 items-center">
+                <input type="submit" value="Upload File" class="w-full bg-blue-600 text-white p-3 rounded-md cursor-pointer hover:bg-blue-500 transition-all">
+            </div>
+        </form>
+    </div>
+    
+    <script src="/javascript/script.js"></script>
+</body>
+</html>

@@ -1,0 +1,49 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Task Manager</title>
+  <link rel="stylesheet" href="/stylesheets/styles.css">
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+
+<body class="bg-zinc-900 text-white">
+  <div class="min-h-screen flex flex-col items-center">
+    <!-- Form Section -->
+    <div class="bg-zinc-800 p-10 rounded-md w-full max-w-lg mt-8">
+      <form action="/create" method="post" class="space-y-4">
+        <input type="text"
+          class="block w-full px-3 py-2 rounded-md bg-zinc-700 text-white placeholder-gray-400 outline-none"
+          placeholder="Type your Filename..." name="title">
+        <textarea
+          class="block w-full px-3 py-2 rounded-md bg-zinc-700 text-white placeholder-gray-400 outline-none resize-none"
+          placeholder="Write your task details here" name="details"></textarea>
+        <input type="submit" value="Create Task"
+          class="w-full bg-blue-600 px-4 py-2 rounded-md text-white cursor-pointer hover:bg-blue-700">
+      </form>
+    </div>
+
+    <!-- Tasks Section -->
+    <div class="tasks  mt-8 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 w-full max-w-6xl px-4">
+      <% if (files.length > 0) { %>
+        <% files.forEach(function(val) { %>
+          <div class="task px-4 py-6 bg-zinc-800 rounded-md">
+            <h1 class="text-2xl font-semibold tracking-tight"><%= val %></h1>
+            <div class="flex w-full justify-between items-center mt-3">
+              <a href="/file/<%= val %>" class="text-blue-500 inline-block  hover:underline">Read More</a>
+              <a href="/edit/<%= val %>" class="text-zinc-600">edit filename</a>
+            </div>
+          </div>
+        <% }); %>
+      <% } else { %>
+        <h3 class="mt-6 text-gray-400">No tasks yet...</h3>
+      <% } %>
+    </div>
+    
+
+  <script src="/javascript/script.js"></script>
+</body>
+
+</html>

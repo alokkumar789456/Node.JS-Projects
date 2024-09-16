@@ -1,0 +1,40 @@
+//! auto generator process 
+
+ npm install -g express-generator
+npm warn deprecated mkdirp@0.5.1: Legacy versions of mkdirp are no longer supported. Please update to mkdirp 1.x. (Note that the API surface has changed to use Promises in 1.x.)
+
+added 10 packages in 8s
+PS C:\Users\alok.k\Desktop\gen> express backend                  
+
+  warning: the default view engine will not be jade in future releases
+  warning: use `--view=jade' or `--help' for additional options       
+
+
+   create : backend\
+   create : backend\public\
+   create : backend\public\javascripts\
+   create : backend\public\images\     
+   create : backend\public\stylesheets\
+   create : backend\public\stylesheets\style.css
+   create : backend\routes\
+   create : backend\routes\index.js
+   create : backend\routes\users.js
+   create : backend\views\
+   create : backend\views\error.jade
+   create : backend\views\index.jade
+   create : backend\views\layout.jade
+   create : backend\app.js
+   create : backend\package.json
+   create : backend\bin\
+   create : backend\bin\www
+
+   change directory:
+     > cd backend
+
+   install dependencies:
+     > npm install
+
+   run the app:
+     > SET DEBUG=backend:* & npm start
+
+PS C:\Users\alok.k\Desktop\gen> 

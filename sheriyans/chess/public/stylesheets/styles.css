@@ -1,0 +1,57 @@
+  /* General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #f0f0f0;
+    margin: 0;
+    padding: 0;
+}
+
+/* Chessboard Container */
+.chessBoard {
+    display: grid;
+    grid-template-columns: repeat(8, 1fr);
+    grid-template-rows: repeat(8, 1fr);
+    width: 80vmin; /* Adjust as needed */
+    height: 80vmin; /* Adjust as needed */
+    margin: 20px auto;
+    border: 2px solid #333;
+}
+
+/* Individual Squares */
+.chessBoard .piece {
+    width: 100%;
+    height: 100%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 2em; /* Adjust size as needed */
+    cursor: pointer;
+}
+
+/* Light and Dark Squares */
+.chessBoard .light {
+    background-color: #eee;
+}
+
+.chessBoard .dark {
+    background-color: #555;
+    color: #fff;
+}
+
+/* Piece Styles */
+.piece.white {
+    color: #fff; /* White pieces */
+}
+
+.piece.black {
+    color: #000; /* Black pieces */
+}
+
+/* Drag and Drop */
+.piece {
+    transition: background-color 0.3s;
+}
+
+.piece.dragging {
+    background-color: rgba(0, 0, 0, 0.1);
+}
