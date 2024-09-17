@@ -6,50 +6,97 @@
     <title>Weather App</title>
     <style>
         body {
-            text-align: center;
-            padding: 20px;
-            font-family: Arial, sans-serif;
-            background-color: #f0f0f0;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background-color: #e9ecef;
+            color: #212529;
+            margin: 0;
+            padding: 0;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            min-height: 100vh;
+        }
+
+        nav {
+            width: 100%;
+            background-color: #343a40;
+            padding: 15px 0;
+            display: flex;
+            justify-content: center;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
         }
 
         nav a {
-            margin: 0 15px;
+            color: #f8f9fa;
             text-decoration: none;
-            color: #007BFF;
+            margin: 0 20px;
             font-size: 18px;
+            font-weight: 500;
+            transition: color 0.3s;
+        }
+
+        nav a:hover {
+            color: #ced4da;
+        }
+
+        .container {
+            width: 100%;
+            max-width: 800px;
+            padding: 20px;
+            margin-top: 80px;
+            text-align: center;
         }
 
         h1 {
-            font-size: 36px;
-            color: #333;
+            font-size: 2.5rem;
+            color: #343a40;
+            margin-bottom: 10px;
         }
 
         p {
-            font-size: 20px;
-            color: #666;
+            font-size: 1.2rem;
+            color: #6c757d;
         }
 
         .search-container {
-            margin-top: 20px;
+            margin-top: 30px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
         }
 
         .search-box {
-            width: 300px;
-            padding: 10px;
-            font-size: 18px;
-            border: 2px solid #007BFF;
+            width: 100%;
+            max-width: 400px;
+            padding: 12px;
+            font-size: 1rem;
+            border: 1px solid #ced4da;
             border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            margin-bottom: 10px;
+            transition: border-color 0.3s;
+        }
+
+        .search-box:focus {
+            border-color: #007bff;
+            outline: none;
+            box-shadow: 0 0 0 0.2rem rgba(38, 143, 255, 0.25);
         }
 
         .search-button {
-            padding: 10px 20px;
-            font-size: 18px;
+            padding: 12px 24px;
+            font-size: 1rem;
             color: #fff;
-            background-color: #007BFF;
+            background-color: #007bff;
             border: none;
             border-radius: 5px;
             cursor: pointer;
             transition: background-color 0.3s;
+            margin: 5px;
         }
 
         .search-button:hover {
@@ -58,52 +105,42 @@
 
         .weather-result {
             margin-top: 20px;
-            font-size: 20px;
-            color: #333;
+            font-size: 1.2rem;
+            color: #343a40;
+            background-color: #ffffff;
+            padding: 20px;
+            border-radius: 5px;
+            box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+            max-width: 600px;
+            margin: 20px auto;
         }
     </style>
 </head>
-
 <body>
     <nav>
-        <a href="/index">Weather</a>
+        <a href="/">Weather</a>
         <a href="/about">About</a>
         <a href="/help">Help</a>
     </nav>
-    <h1>Weather</h1>
-    <p>Use this site to get your weather!</p>
-    <div class="search-container">
-        <input type="text" class="search-box" id="cityInput" placeholder="Enter city name...">
-        <button class="search-button" onclick="getWeather()">Search</button>
+    <div class="container">
+        <h1>Weather App</h1>
+        <p>Use this site to get your weather forecast!</p>
+        <div class="search-container">
+            <input type="text" class="search-box" id="cityInput" placeholder="Enter city name...">
+            <div>
+                <button class="search-button" onclick="getWeather()">Search</button>
+                <button class="search-button" onclick="useCurrentLocation()">Use My Current Location</button>
+            </div>
+        </div>
+        <div class="weather-result" id="weatherResult"></div>
     </div>
-    <div class="weather-result" id="weatherResult"></div>
     <script>
-        console.log('connected ');
-{{!-- 
-        //! fetch api
-        fetch('https://puzzle.mead.io/puzzle')
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-            })
-            .catch((err) => {
-                console.error(err);
-            }); --}}
-
-        fetch('http://localhost:3000/weather?address=bengaluru')
-            .then((res) => res.json())
-            .then((data) => {
-                console.log(data);
-            })
-            .catch((err) => {
-                console.error(err);
-            });
+        console.log('connected');
 
         function getWeather() {
             const city = document.getElementById('cityInput').value;
             const weatherResult = document.getElementById('weatherResult');
             weatherResult.innerHTML = 'Loading...';
-
 
             fetch(`http://localhost:3000/weather?address=${city}`)
                 .then((res) => res.json())
@@ -117,6 +154,37 @@
                 .catch((err) => {
                     weatherResult.innerHTML = 'ERROR: Unable to find location. Try another search!';
                 });
+        }
+
+        function useCurrentLocation() {
+            if (navigator.geolocation) {
+                navigator.geolocation.getCurrentPosition((position) => {
+                    const lat = position.coords.latitude;
+                    const lon = position.coords.longitude;
+
+                    fetch(`http://localhost:3000/weather?lat=${lat}&lon=${lon}`)
+                        .then((res) => res.json())
+                        .then((data) => {
+                            const weatherResult = document.getElementById('weatherResult');
+                            if (data.error) {
+                                weatherResult.innerHTML = `ERROR: ${data.error}`;
+                            } else {
+                                weatherResult.innerHTML = `Location: ${data.location}<br>Forecast: ${data.forecast}`;
+                            }
+                        })
+                        .catch((err) => {
+                            const weatherResult = document.getElementById('weatherResult');
+                            weatherResult.innerHTML = 'ERROR: Unable to find location. Try another search!';
+                        });
+                }, (error) => {
+                    console.error(error);
+                    const weatherResult = document.getElementById('weatherResult');
+                    weatherResult.innerHTML = 'ERROR: Unable to fetch current location. Please enable location services.';
+                });
+            } else {
+                const weatherResult = document.getElementById('weatherResult');
+                weatherResult.innerHTML = 'ERROR: Geolocation is not supported by this browser.';
+            }
         }
     </script>
 </body>

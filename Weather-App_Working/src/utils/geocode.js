@@ -1,5 +1,5 @@
-//! url parsing and giving the required loaction in url
-//! q=Invalidenstr+117+Berlin //you can acces only this one because you dont have subcription
+//! url parsing and giving the required location in url
+//! q=Invalidenstr+117+Berlin //you can access only this one because you doNot have subscription
 import http from 'postman-request'
 
 //? without destructuring
@@ -23,7 +23,7 @@ const geoCode = (address, callback) => {
 
 export default geoCode
 
-//? with destructuring // not working properly dont use this 
+//? with destructuring // not working properly doNot use this 
 // import http from 'postman-request';
 
 // const geoCode = (address, callback) => {

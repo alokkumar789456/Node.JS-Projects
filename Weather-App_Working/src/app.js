@@ -5,6 +5,7 @@ import express from 'express';
 // import hbs from 'hbs'
 import geoCode from './utils/geocode.js'
 import forecast from './utils/forecast.js'
+import reverseGeocode from './utils/reverseGeocode.js';
 
 const app = express();
 
@@ -31,27 +32,18 @@ app.get('/', (req, res) => {
     });
 }); 
 
-app.get('/weather', (req, res) => {
-    if (!req.query.address) {
-        return res.send({
-            error: "you must provide a address !"
-        })
-    }
-    const location = req.query.address
 
-    if (!location) {
-        console.log('Please provide a location');
-    } else {
+app.get('/weather', (req, res) => {
+    if (req.query.address) {
+        const location = req.query.address;
         geoCode(location, (err, data) => {
             if (err) {
-                return console.log('ERROR: ', err);
+                return res.send({ error: `GeoCode Error: ${err}` });
             }
             forecast(data.latitude, data.longitude, (err, forecastData) => {
                 if (err) {
-                    return console.log('ERROR: ', err);
+                    return res.send({ error: `Forecast Error: ${err}` });
                 }
-                console.log(data.CityName);
-                console.log(forecastData);
                 res.send({
                     forecast: forecastData,
                     location: data.CityName,
@@ -59,8 +51,27 @@ app.get('/weather', (req, res) => {
                 });
             });
         });
+    } else if (req.query.lat && req.query.lon) {
+        const lat = req.query.lat;
+        const lon = req.query.lon;
+        reverseGeocode(lat, lon, (err, data) => {
+            if (err) {
+                return res.send({ error: `Reverse Geocode Error: ${err}` });
+            }
+            forecast(lat, lon, (err, forecastData) => {
+                if (err) {
+                    return res.send({ error: `Forecast Error: ${err}` });
+                }
+                res.send({
+                    forecast: forecastData,
+                    location: data.CityName,
+                    address: `Lat: ${lat}, Lon: ${lon}`
+                });
+            });
+        });
+    } else {
+        res.send({ error: "You must provide an address or coordinates!" });
     }
-
 });
 
 app.get('/about', (req, res) => {
@@ -92,7 +103,7 @@ app.get('/products', (req, res) => {
 )
 
 // Define a route for a weather page "*" ,(selects all except the mentioned ones)
-//! note it should be in last becasuse express matches requests to process this error request
+//! note it should be in last because express matches requests to process this error request
 app.get('*', (req, res) => {
     res.render('404page')
 })

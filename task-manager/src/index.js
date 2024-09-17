@@ -7,9 +7,8 @@ app.listen(port, () => {
   console.log(`App listening on port ${port}!`);
 });
 
-
-
-
+//! while using npm test remove "type":module from package.json
+//! while using npm run dev add "type":module from package.json
 
 // import multer from "multer";
 // import path from 'path'

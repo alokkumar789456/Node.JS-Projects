@@ -1,35 +1,21 @@
 import request from "supertest";
 import app from "../src/app";
 import User from "../src/db/model/model-user";
-import jwt from "jsonwebtoken";
-import mongoose from "mongoose";
 import dotenv from "dotenv";
+import path from "path"
+import testDb from './fixtures/db.js'
 
+const avatarPath = path.join(__dirname, 'fixtures', 'avatar.jpg');
 dotenv.config();
 
-const userOneId = new mongoose.Types.ObjectId();
-const userOne = {
-  _id: userOneId,
-  name: "Eminem",
-  email: "eminem@gmail.com",
-  password: "mockingbird!",
-  tokens: [
-    {
-      token: jwt.sign({ _id: userOneId }, process.env.JWT),
-    },
-  ],
-};
 
 // Runs before each test
-beforeEach(async () => {
-  await User.deleteMany();
-  await new User(userOne).save();
-});
+beforeEach(testDb.setupDatabase);
 
 // Runs after each test
-afterEach(() => {
-  console.log("after each");
-});
+// afterEach(() => {
+//   console.log("after each");
+// });
 
 // Testing for creating an account
 test('sign up user', async () => {
@@ -60,8 +46,8 @@ test("should Login Existing User", async () => {
   await request(app)
     .post("/users/login")
     .send({
-      email: userOne.email,
-      password: userOne.password,
+      email: testDb.userOne.email,
+      password: testDb.userOne.password,
     })
     .expect(200);
 });
@@ -71,7 +57,7 @@ test("non existent User!", async () => {
   await request(app)
     .post("/users/login")
     .send({
-      email: userOne.email,
+      email: testDb.userOne.email,
       password: "passPassword",
     })
     .expect(400);
@@ -81,7 +67,7 @@ test("non existent User!", async () => {
 test("should get profile for user", async () => {
   await request(app)
     .get("/users/me")
-    .set('Authorization',`Bearer ${userOne.tokens[0].token}`)
+    .set('Authorization',`Bearer ${testDb.userOne.tokens[0].token}`)
     .send()
     .expect(200);
 });
@@ -98,7 +84,7 @@ test('should not fetch user for unauthenticated users',async()=>{
 test("should delete profile for user", async () => {
     await request(app)
       .delete("/users/me")
-      .set('Authorization',`Bearer ${userOne.tokens[0].token}`)
+      .set('Authorization',`Bearer ${testDb.userOne.tokens[0].token}`)
       .send()
       .expect(200);
   });
@@ -112,11 +98,38 @@ test("should not delete profile for unAuthorized user", async () => {
       .expect(401);
   });
 
+
 //Test to Upload Avatar 
 test('Should Upload a avatar Image',async ()=>{
     await request(app)
     .post('/users/me/avatar')
-    .set('Authorization',`Bearer ${userOne.tokens[0].token}`)
-    .attach('avatar','/tests/fixtures/avatar.jpg')
+    .set('Authorization',`Bearer ${testDb.userOne.tokens[0].token}`)
+    .attach('avatar',avatarPath)
     .expect(200)
+    //checks the image upload by checking the buffer 
+    const user = await User.findById(testDb.userOneId)
+    expect(user.avatar).toEqual(expect.any(Buffer))
+})
+
+test('should Update Valid user fields',async ()=>{
+  await request(app)
+  .patch('/users/me')
+  .set('Authorization',`Bearer ${testDb.userOne.tokens[0].token}`)
+  .send({
+    name:'Alok'
+  })
+  .expect(200)
+  const user = await User.findById(testDb.userOneId)
+  expect(user.name).toEqual('Alok')
+})
+
+
+test('should Not Update InValid user fields',async ()=>{
+  await request(app)
+  .patch('/users/me')
+  .set('Authorization',`Bearer ${testDb.userOne.tokens[0].token}`)
+  .send({
+    height:3.5
+  })
+  .expect(400)
 })
