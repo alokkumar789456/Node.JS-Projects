@@ -5,9 +5,10 @@ const socketIo = require('socket.io');
 const Filter = require('bad-words');
 const { generateMessage, generateLocationMessage } = require('./utils/messages.js');
 const { addUser, removeUser, getUser, getUsersInRoom } = require('./utils/users.js');
+require('dotenv').config();
 
 const app = express();
-const port = process.env.PORT || 3000;
+const port = process.env.PORT
 const server = http.createServer(app);
 const io = socketIo(server);
 

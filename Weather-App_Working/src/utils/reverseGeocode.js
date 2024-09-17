@@ -1,7 +1,13 @@
 import http from 'postman-request';
+import dotenv from 'dotenv';
+const result = dotenv.config();
 
+if (result.error) {
+    console.error('Error loading .env file:', result.error);
+}
+console.log('All environment variables:', process.env);
 const reverseGeocode = (lat, lon, callback) => {
-    const url = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lon}&key=f93334b25e8744fe899d797bf2865a4f`;
+    const url = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lon}&key=${process.env.REVERSEGEOCODE}`;
 
     http({ url, json: true }, (err, res) => {
         if (err) {

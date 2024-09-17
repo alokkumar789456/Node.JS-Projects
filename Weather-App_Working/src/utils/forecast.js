@@ -1,7 +1,13 @@
 //! url parsing and giving the required loaction in url
 //! (52.53041,13.38527) //you can acces only this one because you dont have subcription
 import http from 'postman-request'
-//
+import dotenv from 'dotenv';
+const result = dotenv.config();
+
+if (result.error) {
+    console.error('Error loading .env file:', result.error);
+}
+
 // Goal: Create a reusable function for getting the forecast
 //
 // 1. Setup the "forecast" function in utils/forecast.js
@@ -13,7 +19,7 @@ import http from 'postman-request'
 
 //? without destructuring 
 const forecast = (latitude, longitude, callback) => {
-    const url_1 = `http://api.weatherstack.com/current?access_key=be96af46d93f1da96570cb84de137db7&query=${latitude},${longitude}`;
+    const url_1 = `http://api.weatherstack.com/current?access_key=${process.env.FORECAST}db7&query=${latitude},${longitude}`;
     http({ url: url_1, json: true }, (err, res) => {
         if (err) {
             callback('Unable to connect to location services!', undefined);

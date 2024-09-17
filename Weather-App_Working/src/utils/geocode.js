@@ -1,10 +1,16 @@
 //! url parsing and giving the required location in url
 //! q=Invalidenstr+117+Berlin //you can access only this one because you doNot have subscription
 import http from 'postman-request'
+import dotenv from 'dotenv';
+const result = dotenv.config();
+
+if (result.error) {
+    console.error('Error loading .env file:', result.error);
+}
 
 //? without destructuring
 const geoCode = (address, callback) => {
-    let url_2 = 'https://geocode.search.hereapi.com/v1/geocode?q=' + encodeURIComponent(address) + '&apiKey=PNTq3X_nNHxvCFaON31PTHFD6FGfFKsmJVWl8mmpngg';
+    let url_2 = `https://geocode.search.hereapi.com/v1/geocode?q=`+encodeURIComponent(address)+`&apiKey=${process.env.GEOCODE}`;
     http({ url: url_2, json: true }, (err, res) => {
         if (err) {
             callback('Unable to connect to location services!', undefined);
