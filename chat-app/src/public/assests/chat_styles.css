@@ -16,6 +16,7 @@ body {
 /* Chat container */
 .chat {
   display: flex;
+  flex-direction: column; /* Stack sidebar and main area on smaller screens */
   height: 100vh;
   max-width: 1200px;
   margin: auto;
@@ -27,12 +28,21 @@ body {
 
 /* Sidebar */
 .chat__sidebar {
-  width: 300px;
+  width: 100%; /* Full width on mobile */
   background: #1f1f1f; /* Dark gray sidebar */
   color: #fff;
   padding: 15px;
   overflow-y: auto;
-  border-right: 1px solid #444;
+  border-bottom: 1px solid #444; /* Border on bottom for mobile view */
+}
+
+/* Sidebar in larger screens */
+@media(min-width: 768px) {
+  .chat__sidebar {
+    width: 300px;
+    border-right: 1px solid #444;
+    border-bottom: none;
+  }
 }
 
 .sidebar {
@@ -71,6 +81,7 @@ body {
   display: flex;
   flex-direction: column;
   padding: 15px;
+  position: relative; /* Ensure positioning for emoji picker */
 }
 
 /* Messages */
@@ -122,6 +133,7 @@ body {
 #messageForm {
   display: flex;
   flex: 1;
+  gap: 10px;
 }
 
 #messageForm input {
@@ -147,6 +159,7 @@ body {
   border-radius: 20px;
   cursor: pointer;
   transition: background 0.3s ease, transform 0.2s ease;
+  font-size: 1.2em; /* Use larger font size for symbols */
 }
 
 #messageForm button:hover {
@@ -162,6 +175,7 @@ body {
   border-radius: 20px;
   cursor: pointer;
   transition: background 0.3s ease, transform 0.2s ease;
+  font-size: 1.2em; /* Use larger font size for symbols */
 }
 
 #send-location:hover {
@@ -169,12 +183,69 @@ body {
   transform: scale(1.05); /* Slightly enlarge button on hover */
 }
 
-/* Animation */
-@keyframes fadeIn {
-  from {
-      opacity: 0;
+/* Emoji button */
+#emoji-button {
+  padding: 10px;
+  border: none;
+  background: #007bff; /* Blue button */
+  color: #fff;
+  border-radius: 50%;
+  cursor: pointer;
+  font-size: 1.5em; /* Larger emoji button */
+  transition: background 0.3s ease, transform 0.2s ease;
+}
+
+#emoji-button:hover {
+  background: #0056b3; /* Darker blue on hover */
+  transform: scale(1.05); /* Slightly enlarge button on hover */
+}
+
+/* Emoji picker */
+.emoji-picker {
+  display: none; /* Hide by default */
+  position: absolute;
+  bottom: 60px; /* Position above the message input */
+  right: 10px;
+  background: #fff;
+  border: 1px solid #ddd;
+  border-radius: 5px;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  z-index: 1000;
+  max-width: 300px;
+  max-height: 300px;
+  overflow-y: auto;
+}
+
+.emoji-picker button {
+  font-size: 1.5em;
+  background: none;
+  border: none;
+  cursor: pointer;
+  padding: 5px;
+  transition: background 0.3s ease;
+}
+
+.emoji-picker button:hover {
+  background: #f0f0f0;
+}
+
+/* Media queries for responsiveness */
+@media (max-width: 768px) {
+  .chat {
+    flex-direction: column;
   }
-  to {
-      opacity: 1;
+  
+  .chat__sidebar {
+    width: 100%;
+    border-right: none;
+    border-bottom: 1px solid #444;
+  }
+  
+  .chat__main {
+    padding: 10px;
+  }
+  
+  .emoji-picker {
+    bottom: 70px;
   }
 }

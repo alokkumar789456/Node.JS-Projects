@@ -105,3 +105,40 @@ socket.emit('join', { username, room }, (error) => {
     location.href = '/';
   }
 });
+
+
+//!!!!!!!!!!!!!!!!! EMOJI FUNCTION NO NEED TO SEE THIS 
+
+document.addEventListener('DOMContentLoaded', () => {
+  const emojiButton = document.getElementById('emoji-button');
+  const emojiPicker = document.getElementById('emoji-picker');
+  const messageInput = document.getElementById('message');
+  const emojiPickerScript = document.createElement('script');
+  
+  // Load emoji picker library
+  emojiPickerScript.src = 'https://cdnjs.cloudflare.com/ajax/libs/emoji-picker/1.0.0/emoji-picker.min.js';
+  document.head.appendChild(emojiPickerScript);
+
+  emojiPickerScript.onload = () => {
+    // Initialize emoji picker
+    const picker = new EmojiPicker({
+      trigger: '#emoji-button',
+      container: '#emoji-picker',
+      onSelect: (emoji) => {
+        messageInput.value += emoji; // Append emoji to message input
+      }
+    });
+
+    // Toggle emoji picker visibility
+    emojiButton.addEventListener('click', () => {
+      emojiPicker.style.display = emojiPicker.style.display === 'none' ? 'block' : 'none';
+    });
+
+    // Hide picker if clicking outside
+    document.addEventListener('click', (event) => {
+      if (!emojiButton.contains(event.target) && !emojiPicker.contains(event.target)) {
+        emojiPicker.style.display = 'none';
+      }
+    });
+  };
+});

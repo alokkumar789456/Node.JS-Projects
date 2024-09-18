@@ -5,7 +5,6 @@ const result = dotenv.config();
 if (result.error) {
     console.error('Error loading .env file:', result.error);
 }
-console.log('All environment variables:', process.env);
 const reverseGeocode = (lat, lon, callback) => {
     const url = `https://api.opencagedata.com/geocode/v1/json?q=${lat}+${lon}&key=${process.env.REVERSEGEOCODE}`;
 

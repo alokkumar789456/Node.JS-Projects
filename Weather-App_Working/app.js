@@ -1,11 +1,13 @@
+//! reverse code api finished its trail period so only current location is unavailable 
+
 import express from 'express';
 // import { fileURLToPath } from 'url';
 // import { dirname } from 'path';
 // import path from 'path';
 // import hbs from 'hbs'
-import geoCode from './utils/geocode.js'
-import forecast from './utils/forecast.js'
-import reverseGeocode from './utils/reverseGeocode.js';
+import geoCode from './src/utils/geocode.js'
+import forecast from './src/utils/forecast.js'
+import reverseGeocode from './src/utils/reverseGeocode.js';
 
 const app = express();
 

@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -8,36 +7,36 @@
     <link rel="stylesheet" href="./assests/chat_styles.css" />
     <link rel="icon" href="./assests/icon.png" />
 </head>
-
 <body>
     <div class="chat">
         <div class="chat__sidebar">
-
             <!-- Sidebar template -->
             <script id="sidebar-template" type="text/template">
-    <div class="sidebar">
-      <h2>Room: {{room}}</h2>
-      <ul>
-        {{#users}}
-        <li>{{username}}</li>
-        {{/users}}
-      </ul>
-    </div>
-  </script>
+                <div class="sidebar">
+                    <h2>Room: {{room}}</h2>
+                    <ul>
+                        {{#users}}
+                        <li>{{username}}</li>
+                        {{/users}}
+                    </ul>
+                </div>
+            </script>
         </div>
         <div class="chat__main">
             <div id="messages" class="chat__messages"></div>
 
             <div class="compose">
+                <button id="emoji-button" type="button" title="Emoji Picker">😊</button>
                 <form id="messageForm">
-                    <input type="text" placeholder="Type a message" name="message" id="message" required
-                        autocomplete="off" />
-                    <button type="submit">Send</button>
+                    <input type="text" placeholder="Type a message" name="message" id="message" required autocomplete="off" />
+                    <button type="submit" title="Send">✉️</button>
                 </form>
-                <button id="send-location">Send Location</button>
+                <button id="send-location" type="button" title="Send Location">📍</button>
             </div>
+            <div id="emoji-picker" class="emoji-picker"></div>
         </div>
     </div>
+
     <!-- For messages -->
     <script id="message-template" type="text/template">
         <div class="message">
@@ -66,7 +65,6 @@
 
     <script src="/socket.io/socket.io.js"></script>
     <script src="./js/chat.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/emoji-picker/1.0.0/emoji-picker.min.js"></script> <!-- Include emoji picker script -->
 </body>
-
-
 </html>
