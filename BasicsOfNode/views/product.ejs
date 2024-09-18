@@ -1,0 +1,37 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>E-commerce Website</title>
+    <link rel="stylesheet" href="/stylesheets/product.css">
+</head>
+<body>
+
+    <nav class="navbar">
+        <div class="logo">E-commerce Website</div>
+        <% if (!isLoggedIn) { %>
+            <a href="/login" class="login-button">Login</a>
+        <% } else { %>
+            <a href="/logout" class="logout-button">Logout</a>
+        <% } %>
+    </nav>
+    
+    <div class="products-container">
+        <% products.forEach(product => { %>
+            <div class="product-card">
+                <img src="<%= product.image %>" alt="<%= product.title %>" />
+                <h3><%= product.title %></h3>
+                <p><strong>Price:</strong> $<%= product.price %></p>
+                <p><strong>Description:</strong> <%= product.description %></p>
+                <p><strong>Category:</strong> <%= product.category %></p>
+                <p><strong>Rating:</strong> <%= product.rating.rate %> (from <%= product.rating.count %> reviews)</p>
+                <% if (isLoggedIn) { %>
+                    <button class="buy-button"><a href="/cart">BUY NOW</a></button>
+                <% } %>
+            </div>
+        <% }) %>
+    </div>
+    <script src="/javascript/script.js"></script>
+</body>
+</html>

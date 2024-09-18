@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/cart.css">
+    <title>Cart</title>
+</head>
+<body>
+    <div class="cart-container">
+        <h1>Your Cart</h1>
+        <div class="product-details">
+            <img src="<%= product.image %>" alt="<%= product.title %>" />
+            <h3><%= product.title %></h3>
+            <p><strong>Price:</strong> $<%= product.price %></p>
+        </div>
+        <h2>Select Payment Method:</h2>
+        <form action="/cart/confirm" method="POST">
+            <label>
+                <input type="radio" name="paymentMethod" value="UPI" required> UPI
+            </label>
+            <label>
+                <input type="radio" name="paymentMethod" value="COD" required> Cash on Delivery (COD)
+            </label>
+            <input type="hidden" name="productId" value="<%= product.id %>"> <!-- Use the API product ID -->
+            <button type="submit">Confirm Order</button>
+        </form>
+    </div>
+    <script src="/javascript/script.js"></script>
+</body>
+</html>
