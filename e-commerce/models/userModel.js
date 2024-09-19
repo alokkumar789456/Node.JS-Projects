@@ -1,6 +1,5 @@
 const mongoose = require('mongoose');
 const validator = require('validator');
-const bcrypt = require('bcrypt');
 
 const userSchema = new mongoose.Schema({
     name: {
@@ -22,6 +21,7 @@ const userSchema = new mongoose.Schema({
     phone: {
         type: String,
         required: true,
+        unique: true,
         trim: true,
         validate: {
             validator: function(v) {
@@ -54,29 +54,16 @@ const userSchema = new mongoose.Schema({
         type: String,
         required: true,
     },
-    confirmPassword: {
-        type: String,
-        required: true,
-    },
     orders: [{
-        type: mongoose.Schema.Types.ObjectId,
+        type: String,
         ref: 'Product'
     }]
 }, {
-    timestamps: true 
+    timestamps: true ,
+   otp: String, // Field to store OTP
+  otpExpires: Date, // Field to store OTP expiration time
 });
 
-// Hash password before saving
-// userSchema.pre('save', async function(next) {
-//     if (!this.isModified('password')) return next();
-    
-//     // Hash the password
-//     const salt = await bcrypt.genSalt(10);
-//     this.password = await bcrypt.hash(this.password, salt);
-//     next();
-// });
-
-// Create user model
 const userModel = mongoose.model('User', userSchema);
 
 module.exports = userModel;
