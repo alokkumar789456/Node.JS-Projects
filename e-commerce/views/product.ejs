@@ -1,38 +1,105 @@
 <!DOCTYPE html>
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>E-commerce Website</title>
-    <link rel="stylesheet" href="/stylesheets/product.css">
-</head>
-<body>
 
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>E-commerce Website</title>
+    <link rel="stylesheet" href="/stylesheets/product.css" />
+    <link href="./output.css" rel="stylesheet" />
+    <style>
+        .navbar {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 10px 20px;
+            background-color: #333;
+            color: white;
+        }
+
+        .products-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            padding: 20px;
+        }
+
+        .product-card {
+            border: 1px solid #ccc;
+            border-radius: 8px;
+            padding: 16px;
+            margin: 10px;
+            text-align: center;
+            background-color: #fff;
+        }
+
+        .add-to-cart-button,
+        .buy-button {
+            background-color: #4caf50;
+            color: white;
+            border: none;
+            padding: 10px 20px;
+            border-radius: 5px;
+            cursor: pointer;
+            margin-top: 10px;
+        }
+
+        .add-to-cart-button:hover,
+        .buy-button:hover {
+            background-color: #45a049;
+        }
+    </style>
+</head>
+
+<body>
     <nav class="navbar">
-        <div class="logo">E-commerce Website</div>
-        <div class="cart"><a href="/cart/my/list">Cart</a></div>
+        <div class="logo">Hmmmmmm!</div>
+        <div class="cart"><a href="/cart/my/list">My Orders</a></div>
+        <div class="cart"><a href="/cart/my/cart">My Cart</a></div>
         <% if (!isLoggedIn) { %>
             <a href="/login" class="login-button">Login</a>
-        <% } else { %>
-            <a href="/logout" class="logout-button">Logout</a>
-        <% } %>
+            <% } else { %>
+                <a href="/logout" class="logout-button">Logout</a>
+                <% } %>
     </nav>
-    
+
     <div class="products-container">
-        <% products.forEach(product => { %>
+        <% products.forEach(product=> { %>
             <div class="product-card">
                 <img src="<%= product.image %>" alt="<%= product.title %>" />
-                <h3><%= product.title %></h3>
-                <p><strong>Price:</strong> $<%= product.price %></p>
-                <p><strong>Description:</strong> <%= product.description %></p>
-                <p><strong>Category:</strong> <%= product.category %></p>
-                <p><strong>Rating:</strong> <%= product.rating.rate %> (from <%= product.rating.count %> reviews)</p>
+                <h3>
+                    <%= product.title %>
+                </h3>
+                <p><strong>Price:</strong> $<%= product.price.toFixed(2) %>
+                </p>
+                <p>
+                    <strong>Description:</strong>
+                    <%= product.description.substring(0, 100) %>...
+                </p>
+                <p><strong>Category:</strong>
+                    <%= product.category %>
+                </p>
+                <p>
+                    <strong>Rating:</strong>
+                    <%= product.rating.rate %> (from <%= product.rating.count %> reviews)
+                </p>
+                <form action="/cart/add-to-cart" method="POST">
+                    <input type="hidden" name="productId" value="<%= product._id %>" />
+                    <button type="submit" class="add-to-cart-button">
+                        Add to My Cart
+                    </button>
+                </form>
                 <% if (isLoggedIn) { %>
-                    <button class="buy-button"><a href="/cart">BUY NOW</a></button>
-                <% } %>
+                    <button class="buy-button">
+                        <a href="/cart" style="color: white; text-decoration: none">BUY NOW</a>
+                    </button>
+                    <% } %>
             </div>
-        <% }) %>
+            <% }) %>
     </div>
+
+    <div class="footer">Hmmmmm! By Brain-Phantom</div>
     <script src="/javascript/script.js"></script>
 </body>
+
 </html>

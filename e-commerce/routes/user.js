@@ -19,52 +19,6 @@ userRoutes.get("/signup", (req, res) => {
   res.render("signup");
 });
 
-// // signup form submission
-// userRoutes.post("/signup", async (req, res) => {
-//   const {
-//     name,
-//     email,
-//     phone,
-//     city,
-//     state,
-//     pincode,
-//     country,
-//     password,
-//     confirmPassword,
-//   } = req.body;
-
-//   // Check if passwords match
-//   if (password !== confirmPassword) {
-//     return res.status(400).send("Passwords do not match.");
-//   }
-
-//   try {
-//     // Generate salt and hash the password
-//     const salt = await bcrypt.genSalt(10);
-//     const hash = await bcrypt.hash(password, salt);
-
-//     // Create new user instance
-//     const newUser = new User({
-//       name,
-//       email,
-//       phone,
-//       city,
-//       state,
-//       pincode,
-//       country,
-//       password: hash,
-//     });
-
-//     // Save the user to the database
-//     await newUser.save();
-//     console.log("User Saved :)");
-//     res.status(200).send("Signup success. now you can login.");
-//   } catch (err) {
-//     console.error("Error during signup:", err);
-//     res.status(500).send("Signup failed. Please try again.");
-//   }
-// });
-
 // Generate OTP
 const generateOTP = () => {
   return Math.floor(100000 + Math.random() * 900000).toString(); // Generate a 6-digit OTP
@@ -77,7 +31,7 @@ const transporter = nodemailer.createTransport({
   secure: false,
   auth: {
     user: "alokwastesting@gmail.com", // Make sure this is correct
-    pass: "xgsr wwii ecmc rbev", // Use an app password if 2FA is enabled
+    pass: "xgsr wwii ecmc rbev", // generated App password 
   },
   tls: {
     rejectUnauthorized: false,
@@ -118,7 +72,7 @@ userRoutes.post("/signup", async (req, res) => {
 
     // Create or update user in the database
     const newUser = await User.findOneAndUpdate(
-      { email }, // Search for user by email
+      { email },
       {
         name,
         phone,
@@ -130,8 +84,15 @@ userRoutes.post("/signup", async (req, res) => {
         otp, // Assign OTP to user
         otpExpires: Date.now() + 300000, // OTP valid for 5 minutes
       },
-      { new: true, upsert: true } // Create a new user if not found
+      { new: true, upsert: true }
     );
+
+    console.log("New User:", newUser); // Log user details
+
+
+    if (!newUser) {
+      return res.status(500).send("User creation or update failed.");
+    }
 
     // Send OTP via email
     const mailOptions = {
@@ -146,11 +107,15 @@ userRoutes.post("/signup", async (req, res) => {
 
     // Render OTP verification page
     res.render("verify-otp", { email });
+
   } catch (err) {
-    console.error("Error during signup:", err);
+    console.error("Error during signup:", err.message); // Log error message
     res.status(500).send("Signup failed. Please try again.");
   }
+
+
 });
+
 
 
 // OTP verification
@@ -225,3 +190,4 @@ userRoutes.get("/logout", (req, res) => {
 });
 
 module.exports = userRoutes;
+

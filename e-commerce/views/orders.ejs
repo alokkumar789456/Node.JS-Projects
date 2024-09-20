@@ -3,23 +3,81 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/stylesheets/styles.css">
+    <link href="./output.css" rel="stylesheet">
     <title>User Orders</title>
+    <style>
+        .edit-address {
+            display: none;
+        }
+    </style>
 </head>
 <body>
     <h1>Your Orders</h1>
     <ul>
-        <% if (products.length > 0) { %>
-            <% products.forEach(product => { %>
+        <% if (orders.length > 0) { %>
+            <% orders.forEach(order => { %>
                 <li>
-                    <h2><%= product.title %></h2>
-                    <p>Price: $<%= product.price %></p>
-                    <p><%= product.description %></p>
-                    <img src="<%= product.image %>" alt="<%= product.title %>" />
+                    <h2>Product: <%= order.product.title %></h2>
+                    <img src="<%= order.product.image %>" alt="<%= order.product.title %>" style="width: 100px; height: auto;"/>
+                    <p>Price: $<%= order.product.price %></p>
+                    <p>Description: <%= order.product.description %></p>
+                    
+                    <h3>Payment Method: <%= order.paymentMethod %></h3>
+                    <form action="/my/orders/edit-payment" method="POST">
+                        <input type="hidden" name="orderId" value="<%= order._id %>">
+                        <label for="paymentMethod">Edit Payment Method:</label>
+                        <select name="paymentMethod" id="paymentMethod" required>
+                            <option value="COD" <%= order.paymentMethod === 'COD' ? 'selected' : '' %>>Cash on Delivery</option>
+                            <option value="UPI" <%= order.paymentMethod === 'UPI' ? 'selected' : '' %>>UPI</option>
+                        </select>
+                        <button type="submit">Update</button>
+                    </form>
+
+                    <h3>Shipping Address:</h3>
+                    <p>Name: <%= order.shippingAddress.name %></p>
+                    <p>Email: <%= order.shippingAddress.email %></p>
+                    <p>Phone: <%= order.shippingAddress.phone %></p>
+                    <p>Address: <%= order.shippingAddress.city %>, <%= order.shippingAddress.state %>, <%= order.shippingAddress.pincode %>, <%= order.shippingAddress.country %></p>
+
+                    <button class="edit-button" onclick="toggleEdit('<%= order._id %>')">Edit</button>
+                    
+                    <div class="edit-address" id="edit-address-<%= order._id %>">
+                        <form action="/my/orders/edit-address" method="POST">
+                            <input type="hidden" name="orderId" value="<%= order._id %>">
+                            <label for="name">Name:</label>
+                            <input type="text" name="name" value="<%= order.shippingAddress.name %>" required>
+                            <label for="email">Email:</label>
+                            <input type="email" name="email" value="<%= order.shippingAddress.email %>" required>
+                            <label for="phone">Phone:</label>
+                            <input type="text" name="phone" value="<%= order.shippingAddress.phone %>" required>
+                            <label for="city">City:</label>
+                            <input type="text" name="city" value="<%= order.shippingAddress.city %>" required>
+                            <label for="state">State:</label>
+                            <input type="text" name="state" value="<%= order.shippingAddress.state %>" required>
+                            <label for="pincode">Pincode:</label>
+                            <input type="text" name="pincode" value="<%= order.shippingAddress.pincode %>" required>
+                            <label for="country">Country:</label>
+                            <input type="text" name="country" value="<%= order.shippingAddress.country %>" required>
+                            <button type="submit">Update Address</button>
+                        </form>
+                    </div>
+                    <form action="/my/orders/cancel" method="POST" style="margin-top: 10px;">
+                        <input type="hidden" name="orderId" value="<%= order._id %>">
+                        <button type="submit" style="background-color: red; color: white;">Cancel My Order</button>
+                    </form>                    
                 </li>
             <% }); %>
         <% } else { %>
-            <li>No products found.</li>
+            <li>No orders found.</li>
         <% } %>
     </ul>
+
+    <script>
+        function toggleEdit(orderId) {
+            const editSection = document.getElementById(`edit-address-${orderId}`);
+            editSection.style.display = editSection.style.display === "none" || editSection.style.display === "" ? "block" : "none";
+        }
+    </script>
 </body>
 </html>

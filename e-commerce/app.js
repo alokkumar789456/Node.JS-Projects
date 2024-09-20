@@ -15,6 +15,7 @@ app.use(express.urlencoded({extended:true}))
 app.use(userRoutes)
 app.use(productRoutes)
 app.use('/cart',cartRoutes);
+app.use(cartRoutes);
 
 const port = process.env.PORT||3000
 

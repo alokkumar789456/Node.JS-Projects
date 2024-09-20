@@ -54,28 +54,29 @@
 // });
 
 
-const nodemailer = require('nodemailer');
+// const nodemailer = require('nodemailer');
 
-const transporter = nodemailer.createTransport({
-  host: "smtp.gmail.com",
-  port: 465,
-  secure: true,
-  auth: {
-    user: "alokwastesting@gmail.com",
-    pass: "Root.@8277465", // ensure you're using an App Password if needed
-  },
-});
+// const transporter = nodemailer.createTransport({
+//   host: "smtp.gmail.com",
+//   port: 465,
+//   secure: true,
+//   auth: {
+//     user: "alokwastesting@gmail.com",
+//     pass: "Root.@8277465", // ensure you're using an App Password if needed
+//   },
+// });
 
-const mailOptions = {
-  from: "alokwastesting@gmail.com", // your email
-  to: "alokkumar77954@gmail.com", // recipient's email
-  subject: "Test Email",
-  text: "This is a test email sent from Nodemailer.",
-};
+// const mailOptions = {
+//   from: "alokwastesting@gmail.com", // your email
+//   to: "alokkumar77954@gmail.com", // recipient's email
+//   subject: "Test Email",
+//   text: "This is a test email sent from Nodemailer.",
+// };
 
-transporter.sendMail(mailOptions, (error, info) => {
-  if (error) {
-    return console.log('Error sending email: ', error);
-  }
-  console.log('Email sent: ', info.response);
-});
+// transporter.sendMail(mailOptions, (error, info) => {
+//   if (error) {
+//     return console.log('Error sending email: ', error);
+//   }
+//   console.log('Email sent: ', info.response);
+// });
+

@@ -1,0 +1,27 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Your Cart</title>
+</head>
+<body>
+    <h1>Your Cart</h1>
+    <ul>
+        <% if (products.length > 0) { %>
+            <% products.forEach(item => { %>
+                <li>
+                    <h2><%= item.productId.title %></h2>
+                    <p>Price: $<%= item.productId.price %></p>
+                    <form action="/cart/remove-from-cart" method="POST">
+                        <input type="hidden" name="productId" value="<%= item.productId._id %>">
+                        <button type="submit">Remove from My Cart</button>
+                    </form>
+                </li>
+            <% }); %>
+        <% } else { %>
+            <li>Your cart is empty.</li>
+        <% } %>
+    </ul>
+</body>
+</html>

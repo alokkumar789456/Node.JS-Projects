@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="/stylesheets/cart.css">
-    <title>Cart</title>
+    <link href="./output.css" rel="stylesheet">
+    <title>Your Cart</title>
 </head>
 <body>
     <div class="cart-container">
@@ -14,18 +15,91 @@
             <h3><%= product.title %></h3>
             <p><strong>Price:</strong> $<%= product.price %></p>
         </div>
+
+        <h2>Current Address:</h2>
+        <p><%= currentAddress || 'No address available.' %></p>
+        
+
         <h2>Select Payment Method:</h2>
-        <form action="/cart/confirm" method="POST">
+        <form action="/cart/confirm" method="POST" id="orderForm">
             <label>
-                <input type="radio" name="paymentMethod" value="UPI" required> UPI
+                <input type="radio" name="paymentMethod" value="UPI" disabled> UPI
+                <span style="color: red;">(Currently unavailable)</span>
             </label>
             <label>
                 <input type="radio" name="paymentMethod" value="COD" required> Cash on Delivery (COD)
             </label>
-            <input type="hidden" name="productId" value="<%= product.id %>"> <!-- Use the API product ID -->
-            <button type="submit">Confirm Order</button>
+
+            <input type="hidden" name="productId" value="<%= product.id %>">
+
+            <h2>Shipping Address:</h2>
+            <div>
+                <h3>Current Address:</h3>
+                <label>
+                    <input type="checkbox" name="useCurrentAddress" id="useCurrentAddress" checked>
+                    Use Current Address
+                </label>
+            </div>
+
+            <div id="newAddressSection">
+                <h3>New Address:</h3>
+                <label>Name:</label>
+                <input type="text" name="name" id="nameInput" placeholder="Enter your name" required>
+                
+                <label>Email:</label>
+                <input type="email" name="email" id="emailInput" placeholder="Enter your email" required>
+                
+                <label>Phone:</label>
+                <input type="text" name="phone" id="phoneInput" placeholder="Enter your phone number" required>
+                
+                <label>City:</label>
+                <input type="text" name="city" id="cityInput" placeholder="Enter your city" required>
+                
+                <label>State:</label>
+                <input type="text" name="state" id="stateInput" placeholder="Enter your state" required>
+                
+                <label>Pincode:</label>
+                <input type="text" name="pincode" id="pincodeInput" placeholder="Enter your pincode" required>
+                
+                <label>Country:</label>
+                <input type="text" name="country" id="countryInput" placeholder="Enter your country" required>
+            </div>
+
+            <button type="submit" id="confirmOrderButton">Confirm Order</button>
         </form>
     </div>
     <script src="/javascript/script.js"></script>
+    <script>
+        const useCurrentAddressCheckbox = document.getElementById("useCurrentAddress");
+        const newAddressInputs = {
+            name: document.getElementById("nameInput"),
+            email: document.getElementById("emailInput"),
+            phone: document.getElementById("phoneInput"),
+            city: document.getElementById("cityInput"),
+            state: document.getElementById("stateInput"),
+            pincode: document.getElementById("pincodeInput"),
+            country: document.getElementById("countryInput"),
+        };
+
+        // Populate inputs based on checkbox status
+        function toggleAddressFields() {
+            if (useCurrentAddressCheckbox.checked) {
+                newAddressInputs.name.value = "<%= user.name %>";
+                newAddressInputs.email.value = "<%= user.email %>";
+                newAddressInputs.phone.value = "<%= user.phone %>";
+                newAddressInputs.city.value = "<%= user.city %>";
+                newAddressInputs.state.value = "<%= user.state %>";
+                newAddressInputs.pincode.value = "<%= user.pincode %>";
+                newAddressInputs.country.value = "<%= user.country %>";
+            } else {
+                for (let key in newAddressInputs) {
+                    newAddressInputs[key].value = "";
+                }
+            }
+        }
+
+        useCurrentAddressCheckbox.addEventListener("change", toggleAddressFields);
+        toggleAddressFields();
+    </script>
 </body>
 </html>
