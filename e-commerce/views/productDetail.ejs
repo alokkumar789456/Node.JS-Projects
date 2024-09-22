@@ -1,9 +1,9 @@
-<!DOCTYPE html>
+<!-- <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/stylesheets/styles.css">
+    <link rel="stylesheet" href="/styles.css">
     <link href="./output.css" rel="stylesheet">
     <title><%= product.title %></title>
 </head>
@@ -14,5 +14,24 @@
     <p>Category: <%= product.category %></p>
     <img src="<%= product.image %>" alt="<%= product.title %>">
     <p>Rating: <%= product.rating.rate %> (based on <%= product.rating.count %> reviews)</p>
+</body>
+</html>  -->
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title><%= product.title %></title>
+</head>
+<body class="bg-gray-100 p-6">
+    <div class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
+        <h1 class="text-3xl font-bold mb-4"><%= product.title %></h1>
+        <p class="text-lg mb-2"><strong>Price:</strong> $<%= product.price.toFixed(2) %></p>
+        <p class="mb-4"><strong>Description:</strong> <%= product.description %></p>
+        <p class="mb-2"><strong>Category:</strong> <%= product.category %></p>
+        <img src="<%= product.image %>" alt="<%= product.title %>" class="w-full h-auto rounded mb-4">
+        <p class="mb-2"><strong>Rating:</strong> <%= product.rating.rate %> (based on <%= product.rating.count %> reviews)</p>
+    </div>
 </body>
 </html>

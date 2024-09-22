@@ -1,10 +1,16 @@
-// models/cartModel.js
 const mongoose = require('mongoose');
 
-const cartSchema = new mongoose.Schema({
-    userId: { type: mongoose.Schema.Types.ObjectId, ref: 'User' },
-    productId: { type: mongoose.Schema.Types.ObjectId, ref: 'Product' },
+const CartSchema = new mongoose.Schema({
+    userId: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'User',
+        required: true
+    },
+    productId: {
+        type: String, // Changed to String, since productId is now a string from "1" to "20"
+        required: true
+    }
 });
 
-const Cart = mongoose.model('Cart', cartSchema);
+const Cart = mongoose.model('Cart', CartSchema);
 module.exports = Cart;

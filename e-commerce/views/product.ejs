@@ -1,105 +1,44 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>E-commerce Website</title>
-    <link rel="stylesheet" href="/stylesheets/product.css" />
-    <link href="./output.css" rel="stylesheet" />
-    <style>
-        .navbar {
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-            padding: 10px 20px;
-            background-color: #333;
-            color: white;
-        }
-
-        .products-container {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            padding: 20px;
-        }
-
-        .product-card {
-            border: 1px solid #ccc;
-            border-radius: 8px;
-            padding: 16px;
-            margin: 10px;
-            text-align: center;
-            background-color: #fff;
-        }
-
-        .add-to-cart-button,
-        .buy-button {
-            background-color: #4caf50;
-            color: white;
-            border: none;
-            padding: 10px 20px;
-            border-radius: 5px;
-            cursor: pointer;
-            margin-top: 10px;
-        }
-
-        .add-to-cart-button:hover,
-        .buy-button:hover {
-            background-color: #45a049;
-        }
-    </style>
+    <title>Hmmmmm! Website</title>
+    <link rel="stylesheet" href="/output.css">
 </head>
 
-<body>
-    <nav class="navbar">
-        <div class="logo">Hmmmmmm!</div>
-        <div class="cart"><a href="/cart/my/list">My Orders</a></div>
-        <div class="cart"><a href="/cart/my/cart">My Cart</a></div>
-        <% if (!isLoggedIn) { %>
-            <a href="/login" class="login-button">Login</a>
+<body class="bg-gray-100">
+    <nav style="background-color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1); padding: 16px; display: flex; justify-content: space-between; align-items: center;">
+        <div style="font-size: 24px; font-weight: bold;">Hmmmmm!</div>
+        <div style="display: flex; gap: 16px;">
+            <% if (isLoggedIn) { %>
+                <span style="display: flex; align-items: center;">
+                    <img src="/SVG's/user-solid.svg" alt="Profile" style="width: 24px; height: 24px; margin-right: 8px;" />
+                    <a href="/cart/my/profile" style="display: flex; align-items: center;">
+                    <%= email %></a>
+                </span>
+                <a href="/cart/my/list" style="display: flex; align-items: center;">
+                    <img src="/SVG's/bag-shopping-solid.svg" alt="Orders" style="width: 24px; height: 24px;" />
+                </a>
+                <a href="/cart/my/cart" style="display: flex; align-items: center;">
+                    <img src="/SVG's/cart-shopping-solid.svg" alt="Cart" style="width: 24px; height: 24px;" />
+                </a>
+                <a href="/logout" style="display: flex; align-items: center;">
+                    <img src="/SVG's/right-from-bracket-solid.svg" alt="Logout" style="width: 24px; height: 24px;" />
+                </a>
             <% } else { %>
-                <a href="/logout" class="logout-button">Logout</a>
-                <% } %>
+                <a href="/login" style="background-color: #3B82F6; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none;">Login</a>
+            <% } %>
+        </div>
     </nav>
 
-    <div class="products-container">
-        <% products.forEach(product=> { %>
-            <div class="product-card">
-                <img src="<%= product.image %>" alt="<%= product.title %>" />
-                <h3>
-                    <%= product.title %>
-                </h3>
-                <p><strong>Price:</strong> $<%= product.price.toFixed(2) %>
-                </p>
-                <p>
-                    <strong>Description:</strong>
-                    <%= product.description.substring(0, 100) %>...
-                </p>
-                <p><strong>Category:</strong>
-                    <%= product.category %>
-                </p>
-                <p>
-                    <strong>Rating:</strong>
-                    <%= product.rating.rate %> (from <%= product.rating.count %> reviews)
-                </p>
-                <form action="/cart/add-to-cart" method="POST">
-                    <input type="hidden" name="productId" value="<%= product._id %>" />
-                    <button type="submit" class="add-to-cart-button">
-                        Add to My Cart
-                    </button>
-                </form>
-                <% if (isLoggedIn) { %>
-                    <button class="buy-button">
-                        <a href="/cart" style="color: white; text-decoration: none">BUY NOW</a>
-                    </button>
-                    <% } %>
-            </div>
-            <% }) %>
+    <div class="products-container" style="display: grid; grid-template-columns: repeat(auto-fill, minmax(200px, 1fr)); gap: 16px; padding: 24px;">
+        <!-- js innerHtml is Displayed here -->
+    </div>
+    <div class="footer" style="text-align: center; padding: 16px; margin-top: 24px; background-color: white; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);">
+        <p>Hmmmmm! By Brain-Phantom</p>
     </div>
 
-    <div class="footer">Hmmmmm! By Brain-Phantom</div>
     <script src="/javascript/script.js"></script>
 </body>
-
 </html>

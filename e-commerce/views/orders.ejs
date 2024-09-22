@@ -3,8 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link rel="stylesheet" href="/stylesheets/styles.css">
-    <link href="./output.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
     <title>User Orders</title>
     <style>
         .edit-address {
@@ -12,64 +11,71 @@
         }
     </style>
 </head>
-<body>
-    <h1>Your Orders</h1>
-    <ul>
+<body class="bg-gray-100 p-6">
+    <h1 class="text-3xl font-bold mb-6 text-center">Your Orders</h1>
+    <ul class="max-w-2xl mx-auto bg-white p-6 rounded-lg shadow-md">
         <% if (orders.length > 0) { %>
             <% orders.forEach(order => { %>
-                <li>
-                    <h2>Product: <%= order.product.title %></h2>
-                    <img src="<%= order.product.image %>" alt="<%= order.product.title %>" style="width: 100px; height: auto;"/>
+                <li class="mb-6 border-b pb-4">
+                    <h2 class="text-xl font-semibold">Product: <%= order.product.title %></h2>
+                    <img src="<%= order.product.image %>" alt="<%= order.product.title %>" class="w-24 h-auto mb-2"/>
                     <p>Price: $<%= order.product.price %></p>
                     <p>Description: <%= order.product.description %></p>
                     
-                    <h3>Payment Method: <%= order.paymentMethod %></h3>
-                    <form action="/my/orders/edit-payment" method="POST">
+                    <h3 class="mt-2">Payment Method: <%= order.paymentMethod %></h3>
+                    <form action="/my/orders/edit-payment" method="POST" class="mt-2">
                         <input type="hidden" name="orderId" value="<%= order._id %>">
-                        <label for="paymentMethod">Edit Payment Method:</label>
-                        <select name="paymentMethod" id="paymentMethod" required>
+                        <label for="paymentMethod" class="block mb-1">Edit Payment Method:</label>
+                        <select name="paymentMethod" id="paymentMethod" required class="border rounded p-2 w-full">
                             <option value="COD" <%= order.paymentMethod === 'COD' ? 'selected' : '' %>>Cash on Delivery</option>
-                            <option value="UPI" <%= order.paymentMethod === 'UPI' ? 'selected' : '' %>>UPI</option>
+                            <option disabled>UPI (Currently unavailable)</option>
                         </select>
-                        <button type="submit">Update</button>
+                        <button type="submit" class="mt-2 bg-blue-500 text-white py-1 px-3 rounded hover:bg-blue-600">Update</button>
                     </form>
 
-                    <h3>Shipping Address:</h3>
+                    <h3 class="mt-4">Shipping Address:</h3>
                     <p>Name: <%= order.shippingAddress.name %></p>
                     <p>Email: <%= order.shippingAddress.email %></p>
                     <p>Phone: <%= order.shippingAddress.phone %></p>
                     <p>Address: <%= order.shippingAddress.city %>, <%= order.shippingAddress.state %>, <%= order.shippingAddress.pincode %>, <%= order.shippingAddress.country %></p>
 
-                    <button class="edit-button" onclick="toggleEdit('<%= order._id %>')">Edit</button>
+                    <button class="edit-button mt-2 bg-yellow-500 text-white py-1 px-3 rounded hover:bg-yellow-600" onclick="toggleEdit('<%= order._id %>')">Edit</button>
                     
                     <div class="edit-address" id="edit-address-<%= order._id %>">
-                        <form action="/my/orders/edit-address" method="POST">
+                        <form action="/my/orders/edit-address" method="POST" class="mt-4 bg-gray-200 p-4 rounded">
                             <input type="hidden" name="orderId" value="<%= order._id %>">
-                            <label for="name">Name:</label>
-                            <input type="text" name="name" value="<%= order.shippingAddress.name %>" required>
-                            <label for="email">Email:</label>
-                            <input type="email" name="email" value="<%= order.shippingAddress.email %>" required>
-                            <label for="phone">Phone:</label>
-                            <input type="text" name="phone" value="<%= order.shippingAddress.phone %>" required>
-                            <label for="city">City:</label>
-                            <input type="text" name="city" value="<%= order.shippingAddress.city %>" required>
-                            <label for="state">State:</label>
-                            <input type="text" name="state" value="<%= order.shippingAddress.state %>" required>
-                            <label for="pincode">Pincode:</label>
-                            <input type="text" name="pincode" value="<%= order.shippingAddress.pincode %>" required>
-                            <label for="country">Country:</label>
-                            <input type="text" name="country" value="<%= order.shippingAddress.country %>" required>
-                            <button type="submit">Update Address</button>
+                            <label for="name" class="block mb-1">Name:</label>
+                            <input type="text" name="name" value="<%= order.shippingAddress.name %>" required class="border rounded p-2 w-full mb-2">
+                            
+                            <label for="email" class="block mb-1">Email:</label>
+                            <input type="email" name="email" value="<%= order.shippingAddress.email %>" required class="border rounded p-2 w-full mb-2">
+                            
+                            <label for="phone" class="block mb-1">Phone:</label>
+                            <input type="text" name="phone" value="<%= order.shippingAddress.phone %>" required class="border rounded p-2 w-full mb-2">
+                            
+                            <label for="city" class="block mb-1">City:</label>
+                            <input type="text" name="city" value="<%= order.shippingAddress.city %>" required class="border rounded p-2 w-full mb-2">
+                            
+                            <label for="state" class="block mb-1">State:</label>
+                            <input type="text" name="state" value="<%= order.shippingAddress.state %>" required class="border rounded p-2 w-full mb-2">
+                            
+                            <label for="pincode" class="block mb-1">Pincode:</label>
+                            <input type="text" name="pincode" value="<%= order.shippingAddress.pincode %>" required class="border rounded p-2 w-full mb-2">
+                            
+                            <label for="country" class="block mb-1">Country:</label>
+                            <input type="text" name="country" value="<%= order.shippingAddress.country %>" required class="border rounded p-2 w-full mb-2">
+                            
+                            <button type="submit" class="bg-green-500 text-white py-1 px-3 rounded hover:bg-green-600">Update Address</button>
                         </form>
                     </div>
-                    <form action="/my/orders/cancel" method="POST" style="margin-top: 10px;">
+                    <form action="/my/orders/cancel" method="POST" class="mt-4">
                         <input type="hidden" name="orderId" value="<%= order._id %>">
-                        <button type="submit" style="background-color: red; color: white;">Cancel My Order</button>
+                        <button type="submit" class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600">Cancel My Order</button>
                     </form>                    
                 </li>
             <% }); %>
         <% } else { %>
-            <li>No orders found.</li>
+            <li class="text-center">No orders found.</li>
         <% } %>
     </ul>
 

@@ -3,6 +3,8 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles.css">
+    <link href="./output.css" rel="stylesheet">
     <title>Your Cart</title>
 </head>
 <body>
@@ -21,6 +23,36 @@
             <% }); %>
         <% } else { %>
             <li>Your cart is empty.</li>
+        <% } %>
+    </ul>
+</body>
+</html> 
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link rel="stylesheet" href="/styles.css">
+    <link href="./output.css" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/tailwindcss@2.2.19/dist/tailwind.min.css" rel="stylesheet">
+    <title>Your Cart</title>
+</head>
+<body class="bg-gray-100 p-6">
+    <h1 class="text-3xl font-bold mb-6 text-center">Your Cart</h1>
+    <ul class="max-w-lg mx-auto bg-white p-6 rounded-lg shadow-md">
+        <% if (products.length > 0) { %>
+            <% products.forEach(item => { %>
+                <li class="mb-4 border-b pb-4">
+                    <h2 class="text-xl font-semibold"><%= item.productId.title %></h2>
+                    <p class="text-lg">Price: $<%= item.productId.price %></p>
+                    <form action="/cart/remove-from-cart" method="POST" class="mt-2">
+                        <input type="hidden" name="productId" value="<%= item.productId._id %>">
+                        <button type="submit" class="bg-red-500 text-white py-1 px-3 rounded hover:bg-red-600">Remove from My Cart</button>
+                    </form>
+                </li>
+            <% }); %>
+        <% } else { %>
+            <li class="text-center">Your cart is empty.</li>
         <% } %>
     </ul>
 </body>
