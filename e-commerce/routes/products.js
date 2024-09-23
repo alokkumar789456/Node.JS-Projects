@@ -2,6 +2,7 @@ const express = require('express');
 const cors = require('cors');
 const jwt = require('jsonwebtoken'); 
 const productRoutes = express.Router();
+const User = require('../models/userModel.js')
 productRoutes.use(cors());
 
 // Middleware to verify token and get user email
@@ -19,11 +20,20 @@ const getUserFromToken = (req) => {
 };
 
 // Product page
-productRoutes.get('/', (req, res) => {
+productRoutes.get('/', async (req, res) => {
     const email = getUserFromToken(req); 
-    console.log(email)// Get email from token
     const isLoggedIn = !!email; // Check if user is logged in
-    res.render('product', { products: [], isLoggedIn, email });
+    let profileImage = '';
+
+    if (isLoggedIn) {
+        // Fetch the user's profile image from the database
+        const user = await User.findOne({ email });
+        if (user) {
+            profileImage = user.profileImage; 
+        }
+    }
+
+    res.render('product', { products: [], isLoggedIn, email, profileImage });
 });
 
 module.exports = productRoutes;

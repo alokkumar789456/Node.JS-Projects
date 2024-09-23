@@ -133,7 +133,7 @@ const userSchema = new mongoose.Schema({
     address: String,
     orders: [{
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'Order' // Link to the Order model
+        ref: 'Order'
     }]
 }, {
     timestamps: true,

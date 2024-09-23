@@ -7,7 +7,7 @@ const CartSchema = new mongoose.Schema({
         required: true
     },
     productId: {
-        type: String, // Changed to String, since productId is now a string from "1" to "20"
+        type: String, 
         required: true
     }
 });

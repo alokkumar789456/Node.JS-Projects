@@ -13,21 +13,31 @@
         <div style="display: flex; gap: 16px;">
             <% if (isLoggedIn) { %>
                 <span style="display: flex; align-items: center;">
-                    <img src="/SVG's/user-solid.svg" alt="Profile" style="width: 24px; height: 24px; margin-right: 8px;" />
-                    <a href="/cart/my/profile" style="display: flex; align-items: center;">
-                    <%= email %></a>
+                    <div style="display: flex; align-items: center;">
+                        <% if (profileImage) { %>
+                            <img src="<%= profileImage %>" alt="Profile" style="width: 24px; height: 24px; margin-right: 8px; border-radius: 50%;" />
+                        <% } else { %>
+                            <img src="/SVG's/user-solid.svg" alt="Profile" style="width: 24px; height: 24px; margin-right: 8px;" />
+                        <% } %>
+                        <a href="/cart/my/profile" style="display: flex; align-items: center;">
+                            <%= email %>
+                        </a>
+                    </div>
                 </span>
                 <a href="/cart/my/list" style="display: flex; align-items: center;">
-                    <img src="/SVG's/bag-shopping-solid.svg" alt="Orders" style="width: 24px; height: 24px;" />
+                    <img src="/SVG's/bag-shopping-solid.svg" alt="Orders" style="width: 24px; height: 24px; margin-right: 2px;" />
+                    Order's
                 </a>
                 <a href="/cart/my/cart" style="display: flex; align-items: center;">
-                    <img src="/SVG's/cart-shopping-solid.svg" alt="Cart" style="width: 24px; height: 24px;" />
+                    <img src="/SVG's/cart-shopping-solid.svg" alt="Cart" style="width: 24px; height: 24px; margin-right: 2px;" />
+                    MyCart
                 </a>
                 <a href="/logout" style="display: flex; align-items: center;">
-                    <img src="/SVG's/right-from-bracket-solid.svg" alt="Logout" style="width: 24px; height: 24px;" />
+                    <img src="/SVG's/right-from-bracket-solid.svg" alt="Logout" style="width: 24px; height: 24px; margin-right: 2px;" />
+                    Logout
                 </a>
             <% } else { %>
-                <a href="/login" style="background-color: #3B82F6; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none;">Login</a>
+                <a href="/login" style="background-color: #3B82F6; color: white; padding: 8px 16px; border-radius: 4px; text-decoration: none; margin-right: 2px;">Login</a>
             <% } %>
         </div>
     </nav>
