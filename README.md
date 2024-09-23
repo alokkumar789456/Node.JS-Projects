@@ -9,6 +9,7 @@ This repository contains various mini projects developed using Node.js. Each pro
 
 2. **Weather App**
    - An app that fetches and displays weather information based on user input.
+   - [Live Demo](https://weather-app-bj37.onrender.com)
 
 3. **Chat App**
    - A real-time chat application. 
@@ -22,6 +23,7 @@ This repository contains various mini projects developed using Node.js. Each pro
 
 6. **Chess Game**
    - A web-based chess game that allows users to play against each other.
+   - [Live Demo](https://chess-app-io6p.onrender.com)
 
 7. **ToDo App**
    - A straightforward to-do list application for managing tasks.
