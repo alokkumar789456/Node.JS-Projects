@@ -39,7 +39,7 @@ export default forecast;
 // import http from 'postman-request';
 
 // const forecast = (latitude, longitude, callback) => {
-//     const url_1 = `http://api.weatherstack.com/current?access_key=be96af46d93f1da96570cb84de137db7&query=${latitude},${longitude}`;
+//     const url_1 = `http://api.weatherstack.com/current?access_key=APIIIIIIKEYYYY7&query=${latitude},${longitude}`;
 //     http({ url: url_1, json: true }, (err, { body } = {}) => {
 //         if (err) {
 //             callback('Unable to connect to location services!', undefined);

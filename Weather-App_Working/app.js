@@ -10,7 +10,7 @@ import forecast from './src/utils/forecast.js'
 import reverseGeocode from './src/utils/reverseGeocode.js';
 
 const app = express();
-
+const port = process.env.PORT || 3000
 // const __filename = fileURLToPath(import.meta.url);
 // const __dirname = dirname(__filename);
 // const partialsPath = path.join(__dirname,'../views/partials')
@@ -116,6 +116,6 @@ app.get('/help/*', (req, res) => {
     })
 })
 
-app.listen(3000, () => {
+app.listen(port, () => {
     console.log('server connected');
 });
