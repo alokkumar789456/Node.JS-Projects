@@ -1,7 +1,7 @@
 const express = require('express');
-const User = require('../model/User.js'); // Import your User model
+const User = require('../model/User.js');
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken'); // Import jwt for generating tokens
+const jwt = require('jsonwebtoken'); 
 const loginRoute = express.Router();
 
 // Login page route (optional)
@@ -11,7 +11,7 @@ loginRoute.get('/login', (req, res) => {
 
 // Login logic
 loginRoute.post('/', async (req, res) => {
-  const { email, password } = req.body; // Change to email
+  const { email, password } = req.body; 
   console.log(email);
   console.log(password);
 

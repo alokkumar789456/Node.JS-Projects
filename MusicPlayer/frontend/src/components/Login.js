@@ -1,9 +1,8 @@
 import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
-import "./styles/Login.css";
 
 const Login = () => {
-  const [errorMessage, setErrorMessage] = useState(''); // State for error messages
+  const [errorMessage, setErrorMessage] = useState(""); // State for error messages
   const navigate = useNavigate();
 
   async function handleSubmit(event) {
@@ -28,7 +27,7 @@ const Login = () => {
         console.log("Success:", data);
 
         // Store the token in local storage or cookie
-        localStorage.setItem('token', data.token);
+        localStorage.setItem("token", data.token);
 
         navigate("/player"); // Redirect to player page
       } else {
@@ -47,27 +46,57 @@ const Login = () => {
   };
 
   return (
-    <div className="login-container">
-      <nav className="login-nav">
-        <h2>Hmmmmmm!🎧</h2>
+    <div className="flex flex-col items-center justify-center min-h-screen bg-gray-100">
+      <nav className="mb-6">
+        <h2 className="text-2xl font-bold text-gray-800">Hmmmmmm!🎧</h2>
       </nav>
-      <div className="login-form">
-        <h1>Login</h1>
-        {errorMessage && <p className="error-message">{errorMessage}</p>} {/* Display error message */}
+      <div className="bg-white shadow-md rounded-lg p-8 w-96">
+        <h1 className="text-2xl font-semibold mb-4">Login</h1>
+        {errorMessage && (
+          <p className="text-red-500 mb-4">{errorMessage}</p>
+        )}{" "}
+        {/* Display error message */}
         <form onSubmit={handleSubmit}>
-          <input type="email" name="email" placeholder="Email" required />
-          <input type="password" name="password" placeholder="Password" required />
-          <button type="submit" className="login-button">Login</button>
+          <input
+            type="email"
+            name="email"
+            placeholder="Email"
+            required
+            className="w-full p-2 border border-gray-300 rounded mb-4"
+          />
+          <input
+            type="password"
+            name="password"
+            placeholder="Password"
+            required
+            className="w-full p-2 border border-gray-300 rounded mb-4"
+          />
+          <button
+            type="submit"
+            className="w-full bg-blue-500 text-white font-semibold py-2 rounded hover:bg-blue-600 transition duration-200"
+          >
+            Login
+          </button>
         </form>
-        <div className="social-signup">
-          <button className="google-button" onClick={googleSubmit}>Sign up with Google</button>
+        <div className="my-4">
+          <button
+            className="w-full bg-red-500 text-white font-semibold py-2 rounded hover:bg-red-600 transition duration-200"
+            onClick={googleSubmit}
+          >
+            Sign up with Google
+          </button>
         </div>
-        <p className="signup-text">
-          Don't have an account? <a href="/signup">Sign Up</a>
+        <p className="text-center mt-4">
+          Don't have an account?{" "}
+          <a href="/signup" className="text-blue-500 hover:underline">
+            Sign Up
+          </a>
         </p>
       </div>
-      <footer className="login-footer">
-        <p>&copy; 2024 Hmmmmmm! Player by Brain-Phantom</p>
+      <footer className="mt-6">
+        <p className="text-gray-600 text-sm">
+          &copy; 2024 Hmmmmmm! Player by Brain-Phantom
+        </p>
       </footer>
     </div>
   );
