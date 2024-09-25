@@ -1,0 +1,2 @@
+change signup with google client id and secret id
+change mongo url localhost to atlas cloud

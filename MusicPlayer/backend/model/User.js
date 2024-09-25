@@ -6,14 +6,11 @@ const UserSchema = new mongoose.Schema({
     type: String,
     unique: true,
     required: true,
-    minlength: 3, 
-    maxlength: 20,
-    match: /^[a-zA-Z0-9_]+$/, 
+    match: /^[a-zA-Z0-9_]+$/,
   },
   name: {
     type: String,
     required: true,
-    minlength: 2,
     maxlength: 50,
   },
   email: {
@@ -30,26 +27,34 @@ const UserSchema = new mongoose.Schema({
     required: true,
     validate: {
       validator: function(v) {
-        return validator.isMobilePhone(v, 'any', { strictMode: false }); 
+        return validator.isMobilePhone(v, 'any', { strictMode: false });
       },
       message: props => `${props.value} is not a valid phone number!`,
     },
   },
-  password:{
+  password: {
     type: String,
     required: true,
     minlength: 6,
     validate: {
       validator: function(v) {
-        return /^(?=.*[A-Z])(?=.*[\W_]).+$/.test(v); // At least one uppercase letter and one special character
+        return /^(?=.*[A-Z])(?=.*[\W_]).+$/.test(v);
       },
       message: 'Password must contain at least one uppercase letter and one special character.',
     },
   },
+  otp: {
+    type: String,
+    default: null,
+  },
+  isVerified: {
+    type: Boolean,
+    default: false,
+  },
   playlists: {
     type: [String],
-    default: []
-  }
+    default: [],
+  },
 });
 
 module.exports = mongoose.model('User', UserSchema);
