@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link rel="shortcut icon" href="/utils/icon/envira-brands-solid.svg" type="image/x-icon" />
+    <link rel="stylesheet" href="/styles/mainPage.css" />
+    <title>Image-Gallery</title>
+</head>
+<body>
+    <div class="main-container">
+        <nav>
+            <% if (loggedIn) { %>
+                <h1> <img src="<%= user.profilePicture %>" alt="Profile Picture" style="width: 30px; height: 30px; border-radius: 50%;"/> Welcome, <%= user.username %>!</h1>
+            <% } else { %>
+                <h1>Please log in to continue.</h1>
+            <% } %>
+            <li><div><form action="/upload" method="post" enctype="multipart/form-data">
+              <input type="file" name="photo" required />
+              <button type="submit">Upload Photo</button>
+          </form>
+          </a></div></li>
+            <li>
+                <div>
+                    <input type="text" placeholder="Search..." class="search-bar" />
+                </div>
+            </li>
+            <li>
+                <select class="sort-dropdown">
+                    <option value="" disabled selected>Select Sorting Method</option>
+                    <option value="date">Date</option>
+                    <option value="name">Name</option>
+                    <option value="size">Size</option>
+                </select>
+                <div class="nested-dropdowns">
+                    <div class="date-options" style="display: none;">
+                        <select class="sub-dropdown">
+                            <option value="" disabled selected>Latest/Oldest</option>
+                            <option value="latest">Latest</option>
+                            <option value="oldest">Oldest</option>
+                        </select>
+                    </div>
+                    <div class="name-options" style="display: none;">
+                        <select class="sub-dropdown">
+                            <option value="" disabled selected>A-Z/Z-A</option>
+                            <option value="a-z">A-Z</option>
+                            <option value="z-a">Z-A</option>
+                        </select>
+                    </div>
+                    <div class="size-options" style="display: none;">
+                        <select class="sub-dropdown">
+                            <option value="" disabled selected>Large/Small</option>
+                            <option value="large">Large</option>
+                            <option value="small">Small</option>
+                        </select>
+                    </div>
+                </div>
+            </li>
+            <li>
+                <div></div>
+                <% if (loggedIn) { %>
+                    <div><a href="/logout">🔑 Logout</a></div>
+                <% } else { %>
+                    <div><a href="/">🔑 Login</a></div>
+                <% } %>
+            </li>
+        </nav>
+        <div class="display-photos">
+            <!-- Photos will be displayed here -->
+        </div>
+    </div>
+
+    <script>
+        // JavaScript to show/hide nested dropdowns
+        const sortDropdown = document.querySelector('.sort-dropdown');
+        const dateOptions = document.querySelector('.date-options');
+        const nameOptions = document.querySelector('.name-options');
+        const sizeOptions = document.querySelector('.size-options');
+
+        sortDropdown.addEventListener('change', function () {
+            // Hide all nested options
+            dateOptions.style.display = 'none';
+            nameOptions.style.display = 'none';
+            sizeOptions.style.display = 'none';
+
+            // Show relevant dropdown based on selection
+            if (this.value === 'date') {
+                dateOptions.style.display = 'block';
+            } else if (this.value === 'name') {
+                nameOptions.style.display = 'block';
+            } else if (this.value === 'size') {
+                sizeOptions.style.display = 'block';
+            }
+        });
+    </script>
+</body>
+</html>

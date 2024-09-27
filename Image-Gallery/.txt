@@ -1,0 +1,12 @@
+//Image-Gallery
+
+//loginPage
+// sign with facebook or google 
+
+//mainPage
+// layout => in nav -
+logout/login 
+add(multer) 
+folders/photos(CRUD) 
+sortBy 
+searchBar
