@@ -1,6 +1,6 @@
 //! auto generator process 
 
- npm install -g express-generator
+npm install -g express-generator
 npm warn deprecated mkdirp@0.5.1: Legacy versions of mkdirp are no longer supported. Please update to mkdirp 1.x. (Note that the API surface has changed to use Promises in 1.x.)
 
 added 10 packages in 8s

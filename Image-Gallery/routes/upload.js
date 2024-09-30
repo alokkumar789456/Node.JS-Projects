@@ -1,25 +1,22 @@
 const express = require('express');
 const multer = require('multer');
 const admin = require('firebase-admin'); 
-
+const googleUser = require('../model/googleModel.js'); // Import the user model
+const dotenv = require('dotenv').config()
 const uploadRoute = express.Router();
 
 // Set up multer for file uploads
-const upload = multer({ storage: multer.memoryStorage() });
+const upload = multer({ storage: multer.memoryStorage(), limits: { fileSize: 10 * 1024 * 1024 } }); // Limit file size to 10MB
 
-
-// const admin = require('firebase-admin');
-const serviceAccount = require('../public/JSON/image-gallery-9ddab-firebase-adminsdk-bsrqm-8796673b52.json');
+// Firebase Admin credentials - keep the credentials securely, not in public folder
+const serviceAccount = require('../config/firebase-adminsdk.json');
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    storageBucket: "image-gallery-9ddab.appspot.com" 
+    storageBucket: "image-gallery-9ddab.appspot.com"
 });
 
-
-// Define your upload route
 uploadRoute.post('/upload', upload.single('photo'), async (req, res) => {
-    // Check if a file was uploaded
     if (!req.file) {
         return res.status(400).send('No file uploaded.');
     }
@@ -39,8 +36,15 @@ uploadRoute.post('/upload', upload.single('photo'), async (req, res) => {
             return res.status(500).send(error);
         });
 
-        stream.on('finish', () => {
+        stream.on('finish', async () => {
             const publicUrl = `https://storage.googleapis.com/${bucket.name}/${blob.name}`;
+
+            if (req.user) {
+                await googleUser.findByIdAndUpdate(req.user._id, {
+                    $addToSet: { imageUrls: { url: publicUrl, date: new Date() } }
+                });
+            }
+
             res.status(200).send(`File uploaded successfully: ${publicUrl}`);
         });
 
@@ -49,5 +53,6 @@ uploadRoute.post('/upload', upload.single('photo'), async (req, res) => {
         res.status(500).send('Error uploading file: ' + error.message);
     }
 });
+
 
 module.exports = uploadRoute;

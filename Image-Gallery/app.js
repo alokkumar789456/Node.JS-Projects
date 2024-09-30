@@ -18,22 +18,32 @@ const port = process.env.PORT || 3000;
 const app = express();
 
 const firebaseConfig = {
-    apiKey: "AIzaSyCg2djA8mOgJqhIALW4E5Ftnm1ahrbWJZo",
-    authDomain: "image-gallery-9ddab.firebaseapp.com",
-    projectId: "image-gallery-9ddab",
-    storageBucket: "image-gallery-9ddab.appspot.com",
-    messagingSenderId: "780063464298",
-    appId: "1:780063464298:web:124dd65fab9cd5eed1a313",
-    measurementId: "G-C1KFESCKW8"
+    apiKey: process.env.FB_API_KEY,
+    authDomain:process.env.FB_AUTH_DOMAIN,
+    projectId: process.env.FB_PROJECT_ID,
+    storageBucket: process.env.FB_STORAGE_BUCKET,
+    messagingSenderId: process.env.FB_SENDER_ID,
+    appId:process.env.FB_APPID,
+    measurementId:process.env.FB_MEASUREMENT_ID
   };
-// Initialize Firebase
+//   const analytics = getAnalytics(app);
 firebase.initializeApp(firebaseConfig);
+
+const corsOptions = {
+    origin: '*', 
+    methods: ['GET', 'POST', 'PUT', 'DELETE'],
+    allowedHeaders: ['Content-Type', 'Authorization'],
+    credentials: true 
+  };
+  
 
 
 app.set("view engine", "ejs");
+app.options('*', cors(corsOptions));
+app.use(cors(corsOptions));
 app.use(express.static(path.join(__dirname, "public")));
 app.use(express.urlencoded({ extended: true }));
-app.use(cors());
+app.use(cors(corsOptions));
 app.use(cookieParser())
 app.use(session({
     secret: process.env.SECRET_KEY, 
@@ -43,7 +53,7 @@ app.use(session({
 }));
 
 // Routes
-app.use('/mainPage', mainRoute);
+// app.use(mainRoute);
 app.use('/google', googleRoute);
 app.use(loginRoute);
 app.use(uploadRoute)

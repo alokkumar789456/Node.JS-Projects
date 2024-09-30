@@ -2,7 +2,7 @@ const express = require('express');
 const passport = require('passport');
 const GoogleStrategy = require('passport-google-oauth20').Strategy;
 const session = require('express-session');
-const googleUser = require('../model/googleModel.js');
+const GoogleUser = require('../model/googleModel.js');
 require('dotenv').config();
 
 const googleRoute = express.Router();
@@ -21,14 +21,15 @@ passport.use(new GoogleStrategy({
     callbackURL: `${process.env.BASE_URL}/google/mainPage`
 }, async (accessToken, refreshToken, profile, done) => {
     try {
-        let user = await googleUser.findOne({ googleId: profile.id });
+        let user = await GoogleUser.findOne({ googleId: profile.id });
         if (!user) {
-            user = await googleUser.create({
+            user = await GoogleUser.create({
                 username: profile.displayName,
                 email: profile.emails[0].value,
                 googleId: profile.id,
                 profilePicture: profile.photos[0].value,
-                accessToken
+                accessToken,
+                refreshToken
             });
         } else {
             user.profilePicture = profile.photos[0].value;
@@ -56,7 +57,23 @@ googleRoute.get('/auth/google', passport.authenticate('google', { scope: ['profi
 googleRoute.get('/mainPage',
     passport.authenticate('google', { failureRedirect: '/' }),
     (req, res) => {
-        res.render('mainPage', { loggedIn: true, user: req.user });
+        const loggedIn = true; 
+        const user = req.user; 
+        let images = [];
+
+       console.log(user);
+       console.log(images);
+        if (user && Array.isArray(user.imageUrls)) {
+            images = user.imageUrls; 
+        }
+
+        // Debugging output
+        console.log('Logged in:', loggedIn);
+        console.log('User:', user);
+        console.log('Images being sent to the template:', images);
+
+        // Render mainPage with user and images data
+        res.render('mainPage', { loggedIn, user, images });
     }
 );
 

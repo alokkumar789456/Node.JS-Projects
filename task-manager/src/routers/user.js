@@ -1,4 +1,3 @@
-// src/routers/user.js
 import express from "express";
 import User from "../db/model/model-user.js";
 import auth from "../middleware/auth.js";

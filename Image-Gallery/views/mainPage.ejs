@@ -66,8 +66,18 @@
             </li>
         </nav>
         <div class="display-photos">
-            <!-- Photos will be displayed here -->
+            <% if (images.length > 0) { %>
+                <% images.forEach(image => { %>
+                    <div class="photo-container">
+                        <img src="<%= image.url %>" alt="Uploaded Image" style="max-width: 200px; max-height: 200px;"/>
+                        <p>Uploaded on: <%= new Date(image.date).toLocaleString() %></p> 
+                    </div>
+                <% }); %>
+            <% } else { %>
+                <p>No images uploaded yet.</p>
+            <% } %>
         </div>
+        
     </div>
 
     <script>

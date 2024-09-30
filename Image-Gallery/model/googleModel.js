@@ -1,17 +1,22 @@
-const mongoose = require('mongoose')
+const mongoose = require('mongoose');
 
-const userSchema = new mongoose.Schema({
+const googleUserSchema = new mongoose.Schema({
     username: String,
-    email: { type: String, required: true, unique: true },
-    googleId: { type: String, required: true, unique: true },
-    profilePicture: String, 
-    accessToken:{
-        type:String,
-        required:true,
-        unique:true
-    }
+    email: String,
+    googleId: String,
+    profilePicture: String,
+    accessToken: String,
+    refreshToken: String,
+    imageUrls: [{
+        url: {
+            type: String,
+            required: true,
+        },
+        date: {
+            type: Date,
+            default: Date.now,
+        },
+    }]
 });
 
-const googleUser = mongoose.model('googleUser', userSchema);
-
-module.exports = googleUser;
+module.exports = mongoose.model('GoogleUser', googleUserSchema);
