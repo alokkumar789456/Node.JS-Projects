@@ -1,0 +1,83 @@
+// USERS 
+URL: POST http://localhost:5000/api/auth/signup
+{
+  "name": "John Doe",
+  "email": "johndoe@example.com",
+  "phone": "1234567890",
+  "password": "mypassword"
+}
+
+
+URL: POST http://localhost:5000/api/auth/verify-otp
+{
+  "email": "johndoe@example.com",
+  "otp": "123456"  // Replace with actual OTP
+}
+
+URL: POST http://localhost:5000/api/auth/login
+{
+  "email": "johndoe@example.com",
+  "password": "mypassword"
+}
+
+//BOOKS 
+
+URL: GET http://localhost:5000/api/books
+{
+  "Authorization": "Bearer <your-jwt-token>"
+}
+
+URL: POST http://localhost:5000/api/cart/add
+headers:
+{
+  "Authorization": "Bearer <your-jwt-token>"
+}
+body:
+{
+  "bookId": "book-id-here"
+}
+
+
+URL: POST http://localhost:5000/api/cart/buy
+headers:
+{
+  "Authorization": "Bearer <your-jwt-token>"
+}
+
+URL: POST http://localhost:5000/api/books
+headers:
+{
+  "Authorization": "Bearer <admin-jwt-token>"
+}
+Body (Form-Data for Multer):
+
+Key: bookName (String) - optional
+Key: genre (String) - optional
+Key: authorName (String) - optional
+Key: ISBN (String) - optional
+Key: rate (Number) - optional
+Key: image (File) - optional
+
+// ADMINS ONLY
+URL: PUT http://localhost:5000/api/books/:bookId
+Key: bookName (String)
+Key: genre (String)
+Key: authorName (String)
+Key: ISBN (String)
+Key: rate (Number)
+Key: image (File)
+
+URL: PUT http://localhost:5000/api/books/:bookId
+{
+  "Authorization": "Bearer <admin-jwt-token>"
+}
+Body (Form-Data for Multer):
+
+Key: bookName (String) - optional
+Key: genre (String) - optional
+Key: authorName (String) - optional
+Key: ISBN (String) - optional
+Key: rate (Number) - optional
+Key: image (File) - optional
+
+
