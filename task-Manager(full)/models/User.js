@@ -8,6 +8,7 @@ const userSchema = new mongoose.Schema({
   password: { type: String, required: true },
   orders: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Order' }],
   cart: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Book' }],
+  admin: { type: Boolean, default: false },
   token: { type: String },
 });
 
@@ -18,6 +19,11 @@ userSchema.pre('save', async function (next) {
   this.password = await bcrypt.hash(this.password, salt);
   next();
 });
+
+// Method to compare passwords
+userSchema.methods.comparePassword = async function (candidatePassword) {
+  return await bcrypt.compare(candidatePassword, this.password);
+};
 
 const User = mongoose.model('User', userSchema);
 module.exports = User;

@@ -1,4 +1,5 @@
 const jwt = require('jsonwebtoken');
+// const User = require('../models/User.js')
 require('dotenv').config();
 
 const authMiddleware = (req, res, next) => {
@@ -11,6 +12,7 @@ const authMiddleware = (req, res, next) => {
   }
 
   try {
+    // console.log(token); //DBug
     // Verify token
     const decoded = jwt.verify(token, process.env.JWT_SECRET);
     req.user = decoded;  // Add user payload to req object
