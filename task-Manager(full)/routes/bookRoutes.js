@@ -4,16 +4,16 @@ const authMiddleware = require('../middleware/authMiddleware.js');
 const uploadMiddleware = require('../middleware/uploadMiddleware.js');
 const router = express.Router();
 
-// Admin route to add a book
+// route to add a book
 router.post('/book', authMiddleware, uploadMiddleware.single('image'), addBook);
 
-// Route to list all books (for all users)
+// route to list all books (for all users)
 router.get('/books', authMiddleware, listBooks);
 
-// Admin route to update a book
+// route to update a book
 router.put('/book/:id', authMiddleware, uploadMiddleware.single('image'), updateBook);
 
-// Admin route to delete a book
+// route to delete a book
 router.delete('/book/:id', authMiddleware, deleteBook);
 
 module.exports = router;

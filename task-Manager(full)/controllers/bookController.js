@@ -1,25 +1,41 @@
-const Order = require('../models/Order');
+const Order = require('../models/Order.js');
 const sharp = require('sharp');
 const Book = require('../models/bookModel.js'); 
 const User = require("../models/User.js")
 
+// To Check is User is Admin 
+exports.isAdmin = async (id) => {
+  const UserDetails = await User.findById(id);
+  console.log(UserDetails) //DBug
+  // Check if the user is an admin
+  if (!UserDetails.admin) {
+    return res.status(403).send('Access denied. Admins only.');
+  }
+}
+
 // Add a new book (admin only)
 exports.addBook = async (req, res) => {
   const { genre, authorName, bookName, ISBN, rate } = req.body;
+
   const UserDetails = await User.findById(Object.values(req.user)[0].id);
   
-  // Check if the user is an admin
   if (!UserDetails.admin) {
     return res.status(403).send('Access denied. Admins only.');
   }
 
   try {
-    const image = req.file;
-    const imagePath = `uploads/${image.filename}`;
-    const resizedImagePath = `uploads/resized-${image.filename}`; 
+    let imagePath = null;
+    let resizedImagePath = null;
 
-    // Crop and resize the image
-    await sharp(image.path).resize(200, 300).toFile(resizedImagePath); // Use the new output path
+    // Check if an image was uploaded
+    if (req.file) {
+      const image = req.file;
+      imagePath = `uploads/${image.filename}`;
+      resizedImagePath = `uploads/resized-${image.filename}`;
+
+      // Crop and resize the image
+      await sharp(image.path).resize(200, 300).toFile(resizedImagePath);
+    }
 
     const newBook = new Book({
       genre,
@@ -27,7 +43,7 @@ exports.addBook = async (req, res) => {
       bookName,
       ISBN,
       rate,
-      image: resizedImagePath, // Store the path of the resized image
+      image: resizedImagePath || undefined, 
     });
 
     await newBook.save();
@@ -37,6 +53,7 @@ exports.addBook = async (req, res) => {
     res.status(500).send('Server error');
   }
 };
+
 
 
 // List all books (accessible to all users)
@@ -55,20 +72,29 @@ exports.updateBook = async (req, res) => {
   const { id } = req.params;
   const { genre, authorName, bookName, ISBN, rate } = req.body;
 
-  // Check if the user is an admin
-  if (!req.user.admin) {
+  const UserDetails = await User.findById(Object.values(req.user)[0].id);
+  
+  if (!UserDetails.admin) {
     return res.status(403).send('Access denied. Admins only.');
   }
 
   try {
-    const updatedBook = await Book.findByIdAndUpdate(id, {
+    let updatedData = {
       genre,
       authorName,
       bookName,
       ISBN,
       rate,
-      image: req.file ? `uploads/${req.file.filename}` : undefined,
-    }, { new: true });
+    };
+
+    // Check if an image was uploaded
+    if (req.file) {
+      const image = req.file;
+      const imagePath = `uploads/${image.filename}`;
+      updatedData.image = imagePath;
+    }
+
+    const updatedBook = await Book.findByIdAndUpdate(id, updatedData, { new: true });
 
     if (!updatedBook) {
       return res.status(404).send('Book not found');
@@ -81,12 +107,15 @@ exports.updateBook = async (req, res) => {
   }
 };
 
+
 // Delete a book (admin only)
 exports.deleteBook = async (req, res) => {
   const { id } = req.params;
 
+  const UserDetails = await User.findById(Object.values(req.user)[0].id);
+  // console.log(UserDetails) //DBug
   // Check if the user is an admin
-  if (!req.user.admin) {
+  if (!UserDetails.admin) {
     return res.status(403).send('Access denied. Admins only.');
   }
 

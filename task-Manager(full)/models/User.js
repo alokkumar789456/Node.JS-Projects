@@ -9,7 +9,7 @@ const userSchema = new mongoose.Schema({
   orders: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Order' }],
   cart: [{ type: mongoose.Schema.Types.ObjectId, ref: 'Book' }],
   admin: { type: Boolean, default: false },
-  token: { type: String },
+  token: { type: String }
 });
 
 // Hash password before saving

@@ -22,7 +22,7 @@ const sendOTP = async (email, otp) => {
     from: process.env.EMAIL,
     to: email,
     subject: "OTP Verification",
-    text: `Welcome to Book Store Application! \n\nYour OTP code for the Book Store SignUp Verification is: ${otp}\n\nIf this wasn’t you, kindly report to alokwastesting@gmail.com.`,
+    text: `Welcome to the Book Store Application! \n\nYour OTP code for Book Store Sign-Up Verification is:${otp}. \n\nIf you did not request this, please report it to alokwastesting@gmail.com.`,
   };
 
   await transporter.sendMail(mailOptions);
@@ -77,13 +77,19 @@ exports.verifyOTP = async (req, res) => {
     if (user.token !== otp) return res.status(400).json({ msg: "Invalid OTP" });
 
     // Generate JWT token
-    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, { expiresIn: "1h" });
+    const token = jwt.sign({ id: user._id }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
     user.token = token;
 
     // Generate admin token if the user is an admin
     let adminToken = null;
     if (user.admin) {
-      adminToken = jwt.sign({ id: user._id, role: "admin" }, process.env.JWT_SECRET, { expiresIn: "1h" });
+      adminToken = jwt.sign(
+        { id: user._id, role: "admin" },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+      );
     }
 
     await user.save();
@@ -114,7 +120,7 @@ exports.login = async (req, res) => {
     // Compare passwords
     const isMatch = await user.comparePassword(password);
     // console.log(password); // DBug
-    // console.log(isMatch); // DBug 
+    // console.log(isMatch); // DBug
     if (!isMatch) {
       return res.status(400).json({ msg: "Invalid credentials" });
     }
@@ -127,12 +133,18 @@ exports.login = async (req, res) => {
       },
     };
 
-    const token = jwt.sign(payload, process.env.JWT_SECRET, { expiresIn: "1h" });
+    const token = jwt.sign(payload, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
 
     // Generate admin token if the user is an admin
     let adminToken = null;
     if (user.admin) {
-      adminToken = jwt.sign({ id: user._id, role: "admin" }, process.env.JWT_SECRET, { expiresIn: "1h" });
+      adminToken = jwt.sign(
+        { id: user._id, role: "admin" },
+        process.env.JWT_SECRET,
+        { expiresIn: "1h" }
+      );
     }
 
     res.json({ token, adminToken });
