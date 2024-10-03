@@ -4,6 +4,6 @@ const { buyBook, cancelOrder } = require('../controllers/orderController');
 const authMiddleware = require('../middleware/authMiddleware');
 
 router.post('/cart/buy', authMiddleware, buyBook);
-router.post('/cancelrder',authMiddleware,cancelOrder)
+router.post('/cancelOrder',authMiddleware,cancelOrder)
 
 module.exports = router;

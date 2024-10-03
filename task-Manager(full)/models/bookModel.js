@@ -21,11 +21,13 @@ const bookSchema = new mongoose.Schema({
   },
   rate: {
     type: Number,
-    required: true,
   },
   image: {
     type: String,
   },
+  price:{
+    type:Number
+  }
 });
 
 // Create and export the book model

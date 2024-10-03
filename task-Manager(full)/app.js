@@ -4,10 +4,19 @@ const authRoutes = require('./routes/authRoutes.js');
 const bookRoutes = require('./routes/bookRoutes.js');
 const cartRoute = require('./routes/cartRoute.js');
 const orderRoutes = require('./routes/orderRoutes.js');
+const cookieParser = require('cookie-parser');
 
 const app = express();
 connectDB();
 app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+
+app.use(cookieParser());
+// Global error handling
+app.use((err, req, res, next) => {
+    console.error(err.stack);
+    res.status(500).json({ message: 'Internal Server Error' });
+  });
 
 // Use the routes
 app.use('/api/auth', authRoutes);

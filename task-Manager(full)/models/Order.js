@@ -8,7 +8,9 @@ const orderSchema = new mongoose.Schema({
   ISBN: { type: String, required: true },
   rate: { type: Number, required: true },
   image: { type: String },
+  quantity:{type:Number}
 });
 
+// exporting Model 
 const Order = mongoose.model('Order', orderSchema);
 module.exports = Order;

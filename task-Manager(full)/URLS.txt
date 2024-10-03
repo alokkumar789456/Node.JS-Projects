@@ -52,7 +52,7 @@ EX -
     "genre": "Fiction",
     "authorName": "F. Scott Fitzgerald",
     "ISBN": "9780743273565",
-    "rate": 4.5
+    "rate": 4.5,
     "image":(File)
   }
 
@@ -93,3 +93,5 @@ EX -
 {
     "bookId":"66fd52f0f28615565ca46d7d"
 }
+
+
