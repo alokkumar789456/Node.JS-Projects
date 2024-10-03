@@ -1,0 +1,9 @@
+const express = require("express")
+const router = express.Router()
+const { buyBook, cancelOrder } = require('../controllers/orderController');
+const authMiddleware = require('../middleware/authMiddleware');
+
+router.post('/cart/buy', authMiddleware, buyBook);
+router.post('/cancelOrder',authMiddleware,cancelOrder)
+
+module.exports = router;
