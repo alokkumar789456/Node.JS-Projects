@@ -21,14 +21,4 @@ function authorize(callback) {
     });
 }
 
-// function getAccessToken(oAuth2Client, callback) {
-//     const authUrl = oAuth2Client.generateAuthUrl({
-//         access_type: 'offline',
-//         scope: SCOPES,
-//     });
-//     console.log('Authorize this app by visiting this url:', authUrl);
-//     // Here you can implement a method to capture the authorization code from the user.
-//     callback(authUrl)
-// }
-
 module.exports = { authorize };

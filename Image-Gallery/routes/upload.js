@@ -13,7 +13,7 @@ const serviceAccount = require('../config/firebase-adminsdk.json');
 
 admin.initializeApp({
     credential: admin.credential.cert(serviceAccount),
-    storageBucket: "image-gallery-9ddab.appspot.com"
+    storageBucket: process.env.FIREBASE_STORAGE_BUCKET
 });
 
 uploadRoute.post('/upload', upload.single('photo'), async (req, res) => {
@@ -53,6 +53,5 @@ uploadRoute.post('/upload', upload.single('photo'), async (req, res) => {
         res.status(500).send('Error uploading file: ' + error.message);
     }
 });
-
 
 module.exports = uploadRoute;

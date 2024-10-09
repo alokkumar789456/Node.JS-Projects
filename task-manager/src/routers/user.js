@@ -231,7 +231,7 @@ router.get('/users/:id/avatar',async(req,res)=>{
 //  }
 //  myFunction()
 //! o/p
-//! eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJfaWQiOiJhYmMxMjMiLCJpYXQiOjE3MjQ3MzU5MzZ9.mrgnfU-2BFCjxoaf1-KSraCtYAhMMFUbB94_LOHxxkk
+//! eyJhbGciOiJIUzI1NiIsInR5cCI9i96IkpXVCJ9.eyJfaWQiOiJhYmMxMjMiLCJpYXQiOjE3MjQ3kkMzU5MzZ9.mrgnfU-2BFCjxoaf1-KSrakkCtYAhMMFUbB94_LOHxxkk
 //! jwt contains 3 parts
 //! header -  it includes the type of token (JWT) and the signing algorithm used
 //! payload -  Claims are key-value pairs (actual data) (https://www.base64decode.org/ to decode middle part)
