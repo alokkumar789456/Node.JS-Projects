@@ -52,7 +52,7 @@ Refer to the `screenshots` folder for project details and UI look.
 11. **notes_app (with Front-end)**  
     - Used EJS for the frontend.
 
-12.**imageGallery (Incomplete)**  
+12. **imageGallery (Incomplete)**  
     - Focused on cloud upload (multer) using Firebase and Google authentication (sign up with Google).
 
 ---
