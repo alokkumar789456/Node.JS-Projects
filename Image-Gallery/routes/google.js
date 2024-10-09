@@ -61,8 +61,8 @@ googleRoute.get('/mainPage',
         const user = req.user; 
         let images = [];
 
-       console.log(user);
-       console.log(images);
+    //    console.log(user);
+    //    console.log(images);
         if (user && Array.isArray(user.imageUrls)) {
             images = user.imageUrls; 
         }

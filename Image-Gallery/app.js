@@ -35,7 +35,6 @@ const corsOptions = {
     allowedHeaders: ['Content-Type', 'Authorization'],
     credentials: true 
   };
-  
 
 app.set("view engine", "ejs");
 app.options('*', cors(corsOptions));

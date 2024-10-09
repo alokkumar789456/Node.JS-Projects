@@ -1,7 +1,7 @@
 const express = require('express');
 const multer = require('multer');
 const admin = require('firebase-admin'); 
-const googleUser = require('../model/googleModel.js'); // Import the user model
+const googleUser = require('../model/googleModel.js'); 
 const dotenv = require('dotenv').config()
 const uploadRoute = express.Router();
 
