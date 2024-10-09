@@ -55,6 +55,10 @@ Refer to the `screenshots` folder for project details and UI look.
 12. **imageGallery (Incomplete)**  
     - Focused on cloud upload (multer) using Firebase and Google authentication (sign up with Google).
 
+13. **Online_BookStore Node.js Application (Complete and Neat Code)**
+     - focused on industry standards , project structure , validations 
+     - use PostMan and any standard code editor to run this application
+		 
 ---
 
 Feel free to explore and use these projects for reference!
