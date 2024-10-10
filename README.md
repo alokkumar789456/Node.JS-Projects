@@ -59,6 +59,9 @@ Refer to the `screenshots` folder for project details and UI look.
      - focused on industry standards , project structure , validations 
      - use PostMan and any standard code editor to run this application
      - repo link ( https://github.com/alokkumar789456/OnlineBookstore.git )
+
+14. **URL_Shortner**
+     - focused on node.js/express , shortens the given url 
 		 
 ---
 
