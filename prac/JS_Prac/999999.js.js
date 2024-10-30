@@ -267,7 +267,7 @@
 // compact();
 // console.log(arrFilter);
 
-//! Write a function that returns an anonymous function, which transforms its input by 
+//! Write a function that returns an anonymous function, which transforms its input by
 //! adding a particular suffix at the end.
 //! Examples:
 //! add_ly = add_suffix("ly");
@@ -277,6 +277,51 @@
 //! add_less("fear") ➞ "fearless";
 //! add_less("ruth") ➞ "ruthless";
 
-const suffixAdder = (word)=>{
+// const suffixAdder = (suffix)=>{
+//     return (word) => word + suffix;
+// }
+// const add_less = suffixAdder("less")
+// suffixAdder("breath","less")
+// console.log(add_less("breath"))
+
+//! Hitting the Jackpot
+//! Create a function that takes in an array (slot machine outcome) and returns
+//! true if all elements in the array are identical, and false otherwise.
+//! The array will contain 4 elements.
+//! Examples :
+//! testJackpot(["@", "@", "@", "@"]) ➞ true
+//! testJackpot(["abc", "abc", "abc", "abc"]) ➞ true
+//! testJackpot(["SS", "SS", "SS", "SS"]) ➞ true
+//! testJackpot(["&&", "&", "&&&", "&&&&"]) ➞ false
+//! testJackpot(["SS", "SS", "SS", "Ss"]) ➞ false
+
+// const testJackpot = (arr) => {
+//     if (!Array.isArray(arr)) {
+//       console.log("must be an array");
+//     }
+//     const answer = arr.every((i) => i === arr[0]);
+//     console.log(answer); 
+//     return answer; 
+//   };
+  
+// testJackpot(["@", "@!"])
+
+//! Create a function which takes two strings (p1 and p2 ⁠— which represent player 1 and 2) 
+//! as arguments and returns a string stating the winner in a game of Rock, Paper, Scissors.
+//! Each argument will contain a single string: "Rock", "Paper", or "Scissors". Return the 
+//! winner according to the following rules:
+//! Rock beats Scissors
+//! Scissors beats Paper
+//! Paper beats Rock
+//! If p1 wins, return the string "The winner is p1". If p2 wins, return the string "The winner is p2" 
+//! and if p1 and p2 are the same, return "It's a draw".
+//! Examples
+//! rps("Rock", "Paper") ➞ "The winner is p2"
+//! rps("Scissors", "Paper") ➞ "The winner is p1"
+//! rps("Paper", "Paper") ➞ "It's a draw"
+//! Notes
+//! All inputs will be valid strings.
+
+const rps = (p1,p2)=>{
     
 }
