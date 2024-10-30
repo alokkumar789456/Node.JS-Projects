@@ -202,3 +202,81 @@
 //   }
 // });
 // console.log("sorted Array: ", arr0.concat(arr1, arr2));
+
+//! Create a function which returns the number of true values there are in an array.
+//! countTrue([true, false, false, true, false]) ➞ 2
+//! countTrue([false, false, false, false]) ➞ 0
+//! countTrue([]) ➞ 0
+// let count = 0;
+// const countTrue = () => {
+//   arr = [true, false, true, false, true];
+
+//   arr.map((i) => {
+//     if (i === true) count = count + 1;
+//     return count
+//   });
+// };
+// countTrue();
+// console.log("Count Value: ", count);
+
+//! Move Capital Letters to the Front
+//! Create a function that moves all capital letters to the front of a word.
+//! Examples
+//! capToFront("hApPy") ➞ "APhpy"
+//! capToFront("moveMENT") ➞ "MENTmove"
+
+// const letter = "paBlOescoBar!"
+// const arrCaps = [];
+// const arrSmall = []
+// const capsFront =  ()=>{
+//     for (let i = 0; i < letter.length; i++) {
+//         if(letter[i] >='A' && letter[i]<="Z") arrCaps.push(letter[i])
+//             else arrSmall.push(letter[i])
+//         }
+// }
+
+// capsFront()
+// console.log(arrCaps.concat(arrSmall).join(''));
+
+//! According to the lodash documentation, _.compact creates an array with all falsey
+//! values removed. The values false, null, 0, "", undefined, and NaN are falsey.
+//! Your task is to build this helper function without using lodash.
+//! You will write a function that receives an array and removes all falsey values.
+//! Examples :
+//! compact([0, 1, false, 2, "", 3]);   // => [1, 2, 3]
+
+// const arr = [0, 1, false, 2, "", 3]
+// const arrFilter = []
+// const compact = ()=>{
+//     arr.map((i)=>{
+//         if(!false && null && 0 && "" && undefined && NaN) arrFilter.push(i);
+//     })
+// }
+
+// compact()
+// console.log(arrFilter);
+
+//! function to remove falsey values like 0, false, ""
+// const arr = [0, 1, false, 2, "", 3];
+// const arrFilter = [];
+// const compact = () => {
+//   arr.forEach((i) => {
+//     if (i) arrFilter.push(i);
+//   });
+// };
+// compact();
+// console.log(arrFilter);
+
+//! Write a function that returns an anonymous function, which transforms its input by 
+//! adding a particular suffix at the end.
+//! Examples:
+//! add_ly = add_suffix("ly");
+//! add_ly("hopeless") ➞ "hopelessly";
+//! add_ly("total") ➞ "totally";
+//! add_less = add_suffix("less");
+//! add_less("fear") ➞ "fearless";
+//! add_less("ruth") ➞ "ruthless";
+
+const suffixAdder = (word)=>{
+    
+}

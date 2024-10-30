@@ -1,11 +1,7 @@
 const User = require("../models/userModel.js");
 const validator = require("validator");
-const {
-  isUser,
-  isAdmin,
-  matchBcryptPassword,
-  generateToken,
-} = require("../helpers/verifyUsers.js");
+const bcrypt = require("bcrypt");
+const jwt = require("jsonwebtoken");
 
 exports.createUser = async (req, res) => {
   const { name, phone, email, password, confirmPassword, address, admin } =
@@ -80,14 +76,25 @@ exports.loginUser = async (req, res) => {
 
   try {
     const user = await User.findOne({ email });
-    isUser(user);
-    const userPassword = user.password;
-    matchBcryptPassword(password, userPassword);
-    generateToken(email, user.id);
-    user.token = generateToken.token;
-    await user.save();
-    res.cookie("token", token);
-    res.status(200).json({ token });
+
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
+    const isMatch = await bcrypt.compare(password, user.password);
+    if (!isMatch) {
+      return res.status(400).send("Invalid password");
+    }
+
+    const token = jwt.sign({ email, userId: user.id }, process.env.JWT_SECRET, {
+      expiresIn: "1h",
+    });
+
+    res.cookie("token", token, {
+      httpOnly: true,
+    });
+
+    res.status(200).json({ message: "Logged in successfully" });
   } catch (err) {
     console.error(err);
     res.status(500).send("Server error");
@@ -95,12 +102,24 @@ exports.loginUser = async (req, res) => {
 };
 
 exports.readUser = async (req, res) => {
+  const token = req.cookies.token;
+
+  if (!token) {
+    return res.status(401).send("Access denied. No token provided.");
+  }
+
   try {
-    const userId = req.userId;
+    const decoded = jwt.verify(token, process.env.JWT_SECRET);
+    const userId = decoded.userId; 
+
     const user = await User.findById(userId);
-    isUser(user);
-    isAdmin(user.admin);
+
+    if (!user) {
+      return res.status(404).send("User not found");
+    }
+
     const listUsers = await User.find();
+
     res.status(200).json({ "List of users": listUsers });
   } catch (err) {
     console.error(err);
@@ -131,7 +150,11 @@ exports.deleteUser = async (req, res) => {
   const userId = req.userId;
   try {
     const user = await User.findByIdAndDelete(userId);
-    isUser(user);
+
+    if (!user) {
+      return res.status(404).json({ message: "User not found" });
+    }
+
     res.status(200).json({ message: "User deleted successfully" });
   } catch (err) {
     console.error(err);

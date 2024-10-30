@@ -1,0 +1,15 @@
+{
+  "name": "js_prac",
+  "version": "1.0.0",
+  "main": "999999.js.js",
+  "scripts": {
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "",
+  "license": "ISC",
+  "description": "",
+  "dependencies": {
+    "@types/lodash": "^4.17.12",
+    "lodash": "^4.17.21"
+  }
+}

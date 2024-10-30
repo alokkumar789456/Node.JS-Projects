@@ -1,20 +1,26 @@
 const mongoose = require('mongoose');
 
 const restaurantSchema = new mongoose.Schema({
-  id: {
-    type: mongoose.Schema.Types.ObjectId, // Unique ID for the restaurant
+  name: {
+    type: String,
+    unique: true,
     required: true,
   },
-  dish: {
-    type: mongoose.Schema.Types.ObjectId, // Reference to the Food collection
-    ref: 'foodModel',
-    required: true,
-  },
-  stock: {
-    type: Boolean,
-    default: true, // Dish is in stock by default
-  }
+  dishes: [
+    {
+      dish: {
+        type: mongoose.Schema.Types.ObjectId,
+        ref: 'foodModel',
+        required: true,
+      },
+      stock: {
+        type: Boolean,
+        default: true,
+      }
+    }
+  ],
 });
 
 const Restaurant = mongoose.model('Restaurant', restaurantSchema);
-module.exports = Restaurant;
+
+module.exports = Restaurant; 

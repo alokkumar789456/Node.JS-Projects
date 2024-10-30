@@ -1,13 +1,16 @@
 const mongoose = require("mongoose");
 const bcrypt = require('bcryptjs');
 
-// User Schema 
+// User Schema
 const userSchema = new mongoose.Schema({
   name: {
     type: String,
+    required: true,
   },
   phone: {
     type: Number,
+    required: true,
+    unique: true,
   },
   email: {
     type: String,
@@ -29,11 +32,13 @@ const userSchema = new mongoose.Schema({
   token: {
     type: String,
   },
+  // Cart to store food items and their quantities
   cart: [
     {
       foodId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'foodModel', // Reference to the Food schema
+        ref: 'Food',  // Reference to Food model
+        required: true,
       },
       qty: {
         type: Number,
@@ -42,21 +47,30 @@ const userSchema = new mongoose.Schema({
       }
     }
   ],
+  // Order history with food items and total price for each
   order: [
     {
       foodId: {
         type: mongoose.Schema.Types.ObjectId,
-        ref: 'foodModel',
+        ref: 'Food',
+        required: true,
       },
       totalPrice: {
         type: Number,
         required: true,
       }
     }
+  ],
+  // Array of restaurant references for users who own multiple restaurants
+  restaurants: [
+    {
+      type: mongoose.Schema.Types.ObjectId,
+      ref: 'Restaurant',  // Reference to Restaurant model
+    }
   ]
 });
 
-// Hash password before saving
+// Hash password before saving the user
 userSchema.pre("save", async function (next) {
   if (!this.isModified("password")) return next();
   const salt = await bcrypt.genSalt(10);
@@ -64,5 +78,6 @@ userSchema.pre("save", async function (next) {
   next();
 });
 
+// Model definition
 const User = mongoose.model('User', userSchema);
 module.exports = User;

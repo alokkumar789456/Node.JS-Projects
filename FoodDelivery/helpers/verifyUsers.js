@@ -1,7 +1,7 @@
 const bcrypt = require("bcrypt");
 const jwt = require("jsonwebtoken");
 
-exports.isUser = (user) => {
+exports.isUser = (user,res) => {
   // Check if user exists
   if (!user) {
     return res.status(404).send("User not found");
