@@ -300,20 +300,20 @@
 //       console.log("must be an array");
 //     }
 //     const answer = arr.every((i) => i === arr[0]);
-//     console.log(answer); 
-//     return answer; 
+//     console.log(answer);
+//     return answer;
 //   };
-  
+
 // testJackpot(["@", "@!"])
 
-//! Create a function which takes two strings (p1 and p2 ⁠— which represent player 1 and 2) 
+//! Create a function which takes two strings (p1 and p2 ⁠— which represent player 1 and 2)
 //! as arguments and returns a string stating the winner in a game of Rock, Paper, Scissors.
-//! Each argument will contain a single string: "Rock", "Paper", or "Scissors". Return the 
+//! Each argument will contain a single string: "Rock", "Paper", or "Scissors". Return the
 //! winner according to the following rules:
 //! Rock beats Scissors
 //! Scissors beats Paper
 //! Paper beats Rock
-//! If p1 wins, return the string "The winner is p1". If p2 wins, return the string "The winner is p2" 
+//! If p1 wins, return the string "The winner is p1". If p2 wins, return the string "The winner is p2"
 //! and if p1 and p2 are the same, return "It's a draw".
 //! Examples
 //! rps("Rock", "Paper") ➞ "The winner is p2"
@@ -322,6 +322,106 @@
 //! Notes
 //! All inputs will be valid strings.
 
-const rps = (p1,p2)=>{
-    
-}
+// const rps = (p1, p2) => {
+//     const move1 = p1.toLowerCase();
+//     const move2 = p2.toLowerCase();
+//     if (move1 === move2) {
+//         return "It's a draw";
+//     }
+//     switch (move1) {
+//         case "rock":
+//             return move2 === "scissors" ? "The winner is p1" : "The winner is p2";
+//         case "paper":
+//             return move2 === "rock" ? "The winner is p1" : "The winner is p2";
+//         case "scissors":
+//             return move2 === "paper" ? "The winner is p1" : "The winner is p2";
+//         default:
+//             return "Invalid input";
+//     }
+// };
+// console.log(rps("Rock", "scissors"));
+
+//! Abigail and Benson are playing Rock, Paper, Scissors.
+//! Each game is represented by an array of length 2, where the first element
+//! represents what Abigail played and the second element represents what Benson played.
+//! Given a sequence of games, determine who wins the most number of matches. If they tie, output "Tie".
+//! R stands for Rock
+//! P stands for Paper
+//! S stands for Scissors
+//! Examples
+//! calculateScore([["R", "P"], ["R", "S"], ["S", "P"]]) ➞ "Abigail"
+
+//! // Benson wins the first game (Paper beats Rock).
+//! // Abigail wins the second game (Rock beats Scissors).
+//! // Abigail wins the third game (Scissors beats Paper).
+//! // Abigail wins 2/3.
+
+//! calculateScore([["R", "R"], ["S", "S"]]) ➞ "Tie"
+//! calculateScore([["S", "R"], ["R", "S"], ["R", "R"]]) ➞ "Tie"
+
+// const calculateScore = (arr) => {
+//     if (!Array.isArray(arr)) {
+//       console.log("Please provide an array");
+//       return;
+//     }
+  
+//     if (arr.some((i) => i.length !== 2)) {
+//       console.log("Only 2 players are allowed in each game");
+//       return;
+//     }
+  
+//     if (arr.some((i) => typeof i[0] !== "string" || typeof i[1] !== "string")) {
+//       console.log("Please provide moves as strings");
+//       return;
+//     }
+  
+//     let p1 = 0;
+//     let p2 = 0;
+  
+//     for (let i = 0; i < arr.length; i++) {
+//       let move1 = arr[i][0].toLowerCase();
+//       let move2 = arr[i][1].toLowerCase();
+  
+//       if (move1 === move2) {
+//         continue; 
+//       }
+  
+//       switch (move1) {
+//         case "r":
+//           if (move2 === "s") p1++;
+//           else if (move2 === "p") p2++;
+//           break;
+//         case "p":
+//           if (move2 === "r") p1++;
+//           else if (move2 === "s") p2++;
+//           break;
+//         case "s":
+//           if (move2 === "p") p1++;
+//           else if (move2 === "r") p2++;
+//           break;
+//         default:
+//           console.log("Invalid move detected");
+//           return;
+//       }
+//     }
+  
+//     if (p1 > p2) return "p1 Wins";
+//     if (p2 > p1) return "p2 Wins";
+//     return "Tie";
+// };
+  
+// console.log(calculateScore([["s", "P"], ["s", "r"], ["S", "r"]]));
+
+//! Create a function that takes three collections of arguments and returns the sum of the product of numbers. 
+//! Add the result of the first digit in each collection multiplied together to the result of the second digit 
+//! in each collection multiplied together to get the final solution.
+//! Examples
+//! product(1,2)(1,1)(2,3) ➞ 8
+//! // 1 * 1 * 2 + 2 * 1 * 3
+//! product(10,2)(5,0)(2,3) ➞ 100
+//! // 10 * 5 * 2 + 2 * 0 * 3
+//! product(1,2)(2,3)(3,4) ➞ 30
+//! // 1 * 2 * 3 + 2 * 3 * 4
+//! product(1,2)(0,3)(3,0) ➞ 0
+//! // 1 * 0 * 3 + 2 * 3 * 0
+
