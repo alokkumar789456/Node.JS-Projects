@@ -1,0 +1,13 @@
+social media / gallery
+-> apis & middlewares
+-> auth with cookie 
+-> user crud with private and public
+-> img crud with private and public 
+-> cloudinary / G-drive 
+-> multer
+-> models both 
+-> userModel-ImageModel
+-> search bar implementation 
+-> pagination, filter, sorting 
+
+-> FE chatgpt kar le                                                                                                                                                                                                                                                                                                                                                                                                                                 

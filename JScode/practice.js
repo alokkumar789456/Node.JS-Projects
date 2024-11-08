@@ -211,4 +211,97 @@
 // };
 // console.log(add1(10)(20));
 
- 
+//! Use async/await when dealing with code that relies on asynchronous tasks (like database
+//! requests, HTTP requests, or timers) that need to be executed in a certain order or when
+//! code readability and error handling are priorities.
+// const dummyData = async ()=>{
+//     const res = await fetch('https://dummyjson.com/users')
+//     const data = await res.json()
+//     console.log(data);
+// }
+// dummyData()
+
+//! without async await
+// fetch("https://dummyjson.com/users")
+//   .then((res) => res.json())
+//   .then((data) => console.log(data))
+
+//! A Sudoku is a 9x9 grid that is completed when every 3x3 square, row and column consists of the numbers 1-9.
+//! For this task, you will be given a completed 3x3 square, in the form of a two-dimensional array. Create
+//! a function that checks to make sure this 3x3 square contains each number from 1-9 exactly once. Make
+//! sure there are no duplicates, and no numbers outside this range.
+//! Examples
+//! isMiniSudoku([[1, 3, 2], [9, 7, 8], [4, 5, 6]]) ➞ true
+//! isMiniSudoku([[1, 1, 3], [6, 5, 4], [8, 7, 9]]) ➞ false
+//! // The 1 is repeated twice
+//! isMiniSudoku([[0, 1, 2], [6, 4, 5], [9, 8, 7]]) ➞ false
+//! // The 0 is included (outside range)
+//! isMiniSudoku([[8, 9, 2], [5, 6, 1], [3, 7, 4]]) ➞ true
+
+// const isMiniSudoku = (arr) => {
+//     const checkUnique = []; 
+  
+//     if (!Array.isArray(arr)) {
+//       console.log("Input should be an array");
+//       return;
+//     }
+  
+//     if (arr.length !== 3) {
+//       console.log("This Sudoku must be 3x3");
+//       return;
+//     }
+  
+//     for (let i = 0; i < arr.length; i++) {
+//       if (arr[i].length !== 3) {
+//         console.log("Each row must have exactly 3 elements");
+//         return;
+//       }
+  
+//       for (let j = 0; j < arr[i].length; j++) {
+//         const num = arr[i][j];
+  
+//         if (num < 1 || num > 9) {
+//           console.log("Numbers should be from 1 to 9");
+//           return;
+//         }
+  
+//         if (checkUnique.includes(num)) {
+//           console.log("There are duplicates in the grid");
+//           return;
+//         } else {
+//           checkUnique.push(num); 
+//         }
+//       }
+//     }
+  
+//     if (checkUnique.length === 9) {
+//       console.log("Valid 3x3 Mini Sudoku");
+//       return true;
+//     } else {
+//       console.log("Missing numbers in the grid");
+//       return false;
+//     }
+//   };
+  
+//   console.log(isMiniSudoku([[1, 3, 2], [9, 7, 8], [4, 5, 6]])); 
+
+//! You have a pack of 5 randomly numbered cards, which can range from 0-9. 
+//! You can win if you can produce a higher two-digit number from your cards 
+//! than your opponent. Return true if your cards win that round.
+//! Examples
+//! winRound([2, 5, 2, 6, 9], [3, 7, 3, 1, 2]) ➞ true
+//! // Your cards can make the number 96
+//! // Your opponent can make the number 73
+//! // You win the round since 96 > 73
+//! winRound([2, 5, 2, 6, 9], [3, 7, 3, 1, 2]) ➞ true
+//! winRound([1, 2, 3, 4, 5], [9, 8, 7, 6, 5]) ➞ false
+//! winRound([4, 3, 4, 4, 5], [3, 2, 5, 4, 1]) ➞ false
+
+const winRound = (arr)=>{
+    checkArr = Array.isArray(arr)
+    
+}
+
+
+
+  
