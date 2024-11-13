@@ -1,0 +1,25 @@
+Emp table 
+empId || Email || Password || Role || Dept || branch || createdBy || Admin
+
+Attendence Table
+checkIn-CheckOut
+empId || CheckIn || CheckOut || Date || time duration 
+
+empId || month || totalDays || daysAbsent
+
+Admin Table
+empId || daysPresent || daysAbsent || month || sal || paidLeaves || totalSal
+
+//details 
+
+{
+    admin@gmail.com
+    74kt46qs
+}
+{
+    "empId": 7227,
+    "email": "emp1@gmail.com",
+    "role": "associate Software Engg",
+    "generatedPassword": "x9gyyjss",
+    "createdBy": 1
+}

@@ -322,3 +322,5 @@ FROM student;
 -- WAQTD sname , sid , per , branch of all the students 
 SELECT sname, sid,  per, BRANCH
 FROM student;
+
+
