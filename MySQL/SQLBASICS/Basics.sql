@@ -323,4 +323,6 @@ FROM student;
 SELECT sname, sid,  per, BRANCH
 FROM student;
 
+use temp 
+
 
