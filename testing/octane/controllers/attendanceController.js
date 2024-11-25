@@ -13,6 +13,7 @@ exports.checkIn = async (req, res) => {
 
   try {
     const employee = await Employee.findOne({ where: { empId } });
+
     if (!employee) {
       return res
         .status(404)
@@ -114,6 +115,7 @@ exports.checkOut = async (req, res) => {
     res.status(500).json({ error: error.message });
   }
 };
+
 exports.leaveApproval = async (req, res) => {
   const token = req.cookies.authToken;
 
@@ -136,14 +138,20 @@ exports.leaveApproval = async (req, res) => {
 
     const { empId, status, date } = req.body;
 
-    // Validate status to be either "present" or "absent" 
+    // Validate status to be either "present" or "absent"
     if (!["present", "absent"].includes(status)) {
-      return res.status(400).json({ error: "Invalid status value. Use 'present' or 'absent' only." });
+      return res
+        .status(400)
+        .json({
+          error: "Invalid status value. Use 'present' or 'absent' only.",
+        });
     }
 
     // Validate date format (assuming YYYY-MM-DD format)
     if (!date || !/^\d{4}-\d{2}-\d{2}$/.test(date)) {
-      return res.status(400).json({ error: "Invalid date format. Use YYYY-MM-DD." });
+      return res
+        .status(400)
+        .json({ error: "Invalid date format. Use YYYY-MM-DD." });
     }
 
     const updatedAttendance = await Attendance.update(
@@ -154,7 +162,10 @@ exports.leaveApproval = async (req, res) => {
     if (updatedAttendance[0] === 0) {
       return res
         .status(404)
-        .json({ error: "Attendance record not found or already marked as present for this date." });
+        .json({
+          error:
+            "Attendance record not found or already marked as present for this date.",
+        });
     }
 
     res

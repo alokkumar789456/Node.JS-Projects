@@ -15,6 +15,7 @@ exports.register = async (req, res) => {
   }
 
   try {
+
     const decoded = jwt.verify(token, JWT_SECRET);
     if (!decoded.admin) {
       return res
@@ -76,7 +77,7 @@ exports.login = async (req, res) => {
         email: employee.email,
         admin: employee.admin,
       },
-      JWT_SECRET,
+      process.env.JWT_SECRET,
       { expiresIn: "1h" }
     );
 

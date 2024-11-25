@@ -1,8 +1,8 @@
 const request = require('supertest');
 const app = require('../app.js'); 
-const Employee = require('../models/userModel.js'); // Mock the Employee model
+const Employee = require('../models/userModel.js'); 
 const bcrypt = require('bcrypt');
-const jwt = require('jsonwebtoken');
+const sequelize = require('../config/DB.js'); // Sequelize instance
 
 jest.mock('../models/userModel.js'); 
 
@@ -11,31 +11,35 @@ describe('POST /login', () => {
     jest.clearAllMocks(); // Reset mocks after each test
   });
 
+  afterAll(async () => {
+    await sequelize.close(); // Close database connection
+    jest.restoreAllMocks(); // Restore all mocks
+  });
+
   it('should return 200 and a token for valid credentials', async () => {
-    // Mock employee data
     const mockEmployee = {
-      empId: 1,
+      empId: 3,
       email: 'admin@gmail.com',
-      password: bcrypt.hashSync('74kt46qs', 10), // Hashed password
+      password: bcrypt.hashSync('8pimtqla', 10),
       admin: true,
     };
 
-    Employee.findOne.mockResolvedValue(mockEmployee); // Mock DB query
+    Employee.findOne.mockResolvedValue(mockEmployee); 
 
     const response = await request(app)
       .post('/login')
       .send({
         email: 'admin@gmail.com',
-        password: '74kt46qs',
+        password: '8pimtqla',
       });
 
     expect(response.status).toBe(200);
-    expect(response.text).toContain('Login successful! Welcome, Employee ID: 1');
+    expect(response.text).toContain('Login successful! Welcome, Employee ID: 3');
     expect(response.headers['set-cookie']).toBeDefined();
   });
 
   it("should return 404 if the email doesn't exist", async () => {
-    Employee.findOne.mockResolvedValue(null); // Mock DB query returning no employee
+    Employee.findOne.mockResolvedValue(null);
 
     const response = await request(app)
       .post('/login')
@@ -49,15 +53,14 @@ describe('POST /login', () => {
   });
 
   it('should return 401 for an incorrect password', async () => {
-    // Mock employee data with correct email but incorrect password
     const mockEmployee = {
-      empId: 1,
+      empId: 3,
       email: 'admin@gmail.com',
-      password: bcrypt.hashSync('74kt46qs', 10), // Hashed password
+      password: bcrypt.hashSync('8pimtqla', 10),
       admin: true,
     };
 
-    Employee.findOne.mockResolvedValue(mockEmployee); // Mock DB query
+    Employee.findOne.mockResolvedValue(mockEmployee); 
 
     const response = await request(app)
       .post('/login')
@@ -71,7 +74,6 @@ describe('POST /login', () => {
   });
 
   it('should return 500 if an error occurs', async () => {
-    // Simulate an internal server error
     Employee.findOne.mockRejectedValue(new Error('Database connection error'));
 
     const response = await request(app)
@@ -84,4 +86,4 @@ describe('POST /login', () => {
     expect(response.status).toBe(500);
     expect(response.text).toBe('An error occurred: Database connection error');
   });
-});
+})

@@ -1,35 +1,39 @@
 const { Sequelize } = require("sequelize");
 require("dotenv").config();
 
+// Environment variables
 const dbName = process.env.DB_NAME;
-const name = process.env.NAME;
+const username = process.env.NAME;
 const password = process.env.PASSWORD;
-const localhost = process.env.HOST;
+const host = process.env.HOST;
 const port = process.env.DBPORT;
 const dialect = process.env.DIALECT;
 
-const sequelize = new Sequelize(dbName, name, password, {
-  host: localhost,
-  port: port,
-  dialect: dialect,
+// Sequelize instance
+const sequelize = new Sequelize(dbName, username, password, {
+  host,
+  port,
+  dialect,
+  logging: false,
 });
 
-sequelize
-  .authenticate()
-  .then(() => {
-    console.log("DataBase Authenticated Successfully");
-  })
-  .catch((err) => {
-    console.error("DataBase Was Not Authenticated! ", err.message);
-  });
+// Function to initialize the database
+const initializeDatabase = async () => {
+  try {
+    await sequelize.authenticate();
+    console.log("Database authenticated successfully");
 
-sequelize
-  .sync()
-  .then(() => {
-    console.log("DataBase was Synced Successfully");
-  })
-  .catch((err) => {
-    console.error("DataBase Did Not sync Properly ", err.message);
-  });
+    await sequelize.sync();
+    console.log("Database synced successfully");
+  } catch (error) {
+    console.error("Database initialization error: ", error.message);
+  }
+};
 
+// Call the initialization function only in non-test environments
+if (process.env.NODE_ENV !== "test") {
+  initializeDatabase();
+}
+
+// Export the Sequelize instance
 module.exports = sequelize;
