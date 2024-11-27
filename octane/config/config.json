@@ -1,0 +1,23 @@
+{
+  "development": {
+    "username": "root",
+    "password": "Root.@123",
+    "database": "octane",
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "test": {
+    "username": "root",
+    "password": "Root.@123",
+    "database": "octane", 
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  },
+  "production": {
+    "username": "root",
+    "password": "Root.@123",
+    "database": "octane", 
+    "host": "127.0.0.1",
+    "dialect": "mysql"
+  }
+}

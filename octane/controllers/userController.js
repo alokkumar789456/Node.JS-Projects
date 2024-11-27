@@ -38,7 +38,7 @@ exports.changePassword = async (req, res) => {
 
   exports.userDetails = async (req, res) => {
     const token = req.cookies.authToken;
-
+  
     if (!token) {
       return res.status(401).json({ error: "Access denied. No token provided." });
     }
